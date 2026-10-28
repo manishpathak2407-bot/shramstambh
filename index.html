@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#d95a00">
+  <meta name="description" content="श्रम स्तंभ (Shram Stambh) - Client-side legal and welfare infrastructure for migrant laborers in India. Digital wage khata, statutory wage auditor, contractor vetting, and anonymous whistleblower portal.">
+  <title>श्रम स्तंभ · Shram Stambh | मजदूरी व विधिक अधिकार मंच</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Real-time Audio Narrator Ticker (Low-Literacy Aid) -->
+  <aside id="speechBar" class="speech-bar" role="status" aria-live="polite">
+    <div class="speech-bar-info">
+      <div class="speech-waves">
+        <span></span><span></span><span></span>
+      </div>
+      <span id="speechText" data-i18n="audio_playing_ticker">श्रम स्तंभ ऑडियो उद्घोषक सक्रिय है...</span>
+    </div>
+    <button id="btnStopSpeech" class="btn-stop-speech" data-i18n="btn_stop_audio">आवाज बंद करें ✕</button>
+  </aside>
+
+  <!-- Main Sticky Header -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="#" class="brand-wrapper" aria-label="श्रम स्तंभ होम">
+        <div class="brand-logo-icon" aria-hidden="true">⚒️</div>
+        <div class="brand-text">
+          <h1 data-i18n="app_title">श्रम स्तंभ</h1>
+          <div class="brand-tagline" data-i18n="app_subtitle">असंगठित कामगार कल्याण व विधिक अधिकार मंच</div>
+        </div>
+      </a>
+
+      <div class="header-controls">
+        <a href="tel:14434" class="emergency-badge" title="राष्ट्रीय श्रम हेल्पलाइन">
+          <span class="badge-icon">📞</span>
+          <span data-i18n="badge_emergency">श्रम हेल्पलाइन: 14434</span>
+        </a>
+
+        <!-- Accessibility: Language Toggle -->
+        <button id="btnLangToggle" class="ctrl-btn" title="भाषा बदलें / Switch Language" aria-label="Switch Language">
+          🌐 English
+        </button>
+
+        <!-- Accessibility: High Contrast (Field/Sunlight Mode) -->
+        <button id="btnContrastToggle" class="ctrl-btn" title="धूप/हाई कंट्रास्ट मोड" aria-label="High Contrast Mode">
+          ☀️ कंट्रास्ट
+        </button>
+
+        <!-- Accessibility: Large Font -->
+        <button id="btnFontToggle" class="ctrl-btn" title="फॉन्ट आकार बड़ा करें" aria-label="Increase Font Size">
+          A+ फॉन्ट
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Bilingual Navigation Bar (Desktop top bar / Mobile thumb-dock) -->
+  <nav class="main-nav" role="navigation" aria-label="Main Navigation">
+    <div class="nav-container">
+      <button class="nav-tab active" data-tab="khata" aria-selected="true">
+        <span class="tab-icon">📋</span>
+        <span data-i18n="tab_khata">खाता</span>
+        <small style="font-size: 0.65rem; opacity: 0.8;" data-i18n="tab_khata_sub">डिजिटल लेजर</small>
+      </button>
+
+      <button class="nav-tab" data-tab="verify" aria-selected="false">
+        <span class="tab-icon">⚖️</span>
+        <span data-i18n="tab_verify">जांचें</span>
+        <small style="font-size: 0.65rem; opacity: 0.8;" data-i18n="tab_verify_sub">कानूनी मजदूरी</small>
+      </button>
+
+      <button class="nav-tab" data-tab="contractors" aria-selected="false">
+        <span class="tab-icon">⭐</span>
+        <span data-i18n="tab_contractors">रेटिंग</span>
+        <small style="font-size: 0.65rem; opacity: 0.8;" data-i18n="tab_contractors_sub">ठेकेदार साख</small>
+      </button>
+
+      <button class="nav-tab" data-tab="grievance" aria-selected="false">
+        <span class="tab-icon">🛡️</span>
+        <span data-i18n="tab_grievance">शिकायत</span>
+        <small style="font-size: 0.65rem; opacity: 0.8;" data-i18n="tab_grievance_sub">गोपनीय केंद्र</small>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main View Container -->
+  <main class="main-content" role="main">
+
+    <!-- ====================================================================
+         VIEW 1: KHATA (DIGITAL WAGE LEDGER & VOUCHERS)
+         ==================================================================== -->
+    <section id="view-khata" class="view-panel active" aria-labelledby="khataHeading">
+      <div class="section-banner">
+        <div class="section-title-wrap">
+          <h2 id="khataHeading" data-i18n="khata_banner_title">📋 डिजिटल दैनिक मजदूरी खाता</h2>
+          <p data-i18n="khata_banner_sub">रोज़ की मजदूरी और एडवांस का पक्का डिजिटल हिसाब रखें।</p>
+        </div>
+        <button class="btn-narrate" data-narrate-key="khataSection" aria-label="इस अनुभाग का विवरण सुनें">
+          🔊 <span data-i18n="btn_listen">सुनिए</span>
+        </button>
+      </div>
+
+      <!-- Financial Metrics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label" data-i18n="stat_total_earned">कुल अर्जित मजदूरी</span>
+          <span id="kpiTotalEarned" class="stat-value">₹0</span>
+          <span class="stat-subtext">कुल दर्ज कार्य मूल्य</span>
+        </div>
+        <div class="stat-card paid">
+          <span class="stat-label" data-i18n="stat_total_advance">प्राप्त एडवांस</span>
+          <span id="kpiTotalAdvance" class="stat-value paid-text">₹0</span>
+          <span class="stat-subtext">नगद/खाते में मिला</span>
+        </div>
+        <div class="stat-card due">
+          <span class="stat-label" data-i18n="stat_total_due">कुल बाकी बकाया</span>
+          <span id="kpiTotalDue" class="stat-value due-text">₹0</span>
+          <span class="stat-subtext">ठेकेदार से लेना बाकी</span>
+        </div>
+        <div class="stat-card days">
+          <span class="stat-label" data-i18n="stat_total_days">कुल दर्ज कार्य दिवस</span>
+          <span id="kpiTotalDays" class="stat-value" style="color: #0284c7;">0</span>
+          <span class="stat-subtext">हाजिरी प्रविष्टियां</span>
+        </div>
+      </div>
+
+      <!-- Two-Column Interactive Layout -->
+      <div class="dashboard-columns">
+        
+        <!-- Left Column: Work Logger Form -->
+        <div class="app-card">
+          <div class="card-title-bar">
+            <h3 data-i18n="form_log_work_title">नया काम दर्ज करें (Log Work)</h3>
+            <span class="badge badge-verified">₹0 फ़ीस · 100% ऑफ़लाइन</span>
+          </div>
+
+          <form id="formLogWork" novalidate>
+            <div class="form-grid">
+              
+              <div class="form-group">
+                <label for="entryDate" class="form-label" data-i18n="lbl_date">काम की तारीख</label>
+                <input type="date" id="entryDate" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="entryThekedar" class="form-label" data-i18n="lbl_thekedar">ठेकेदार का नाम / मुंशी</label>
+                <input type="text" id="entryThekedar" class="form-input" placeholder="उदा. रमेश ठेकेदार, गुप्ता कंस्ट्रक्शन" data-i18n-placeholder="ph_thekedar" required>
+              </div>
+
+              <div class="form-group">
+                <label for="entrySite" class="form-label" data-i18n="lbl_site">साइट / कार्यस्थल का नाम</label>
+                <input type="text" id="entrySite" class="form-input" placeholder="उदा. एपेक्स टॉवर 4, सेक्टर 62" data-i18n-placeholder="ph_site" required>
+              </div>
+
+              <div class="form-group">
+                <label for="entryRole" class="form-label" data-i18n="lbl_role">काम की श्रेणी (Role)</label>
+                <select id="entryRole" class="form-select">
+                  <option value="Labourer (अकुशल मजदूर)" data-i18n="opt_unskilled">अकुशल मजदूर / हेल्पर / बेलदार</option>
+                  <option value="Semi-Skilled (अर्ध-कुशल)" data-i18n="opt_semiskilled">अर्ध-कुशल / सहायक राजमिस्त्री</option>
+                  <option value="Mason (राजमिस्त्री)" selected data-i18n="opt_skilled">कुशल कारीगर / राजमिस्त्री / बढ़ई / प्लंबर</option>
+                  <option value="Supervisor (फोरमैन)" data-i18n="opt_highlyskilled">उच्च कुशल / सुपरवाइजर / फोरमैन</option>
+                </select>
+              </div>
+
+              <div class="form-grid two-col">
+                <div class="form-group">
+                  <label for="entryWage" class="form-label" data-i18n="lbl_wage">तय दैनिक मजदूरी (₹)</label>
+                  <div class="input-currency-wrapper">
+                    <span class="currency-symbol">₹</span>
+                    <input type="number" id="entryWage" class="form-input" placeholder="750" min="0" step="10" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="entryAdvance" class="form-label" data-i18n="lbl_advance">आज मिला एडवांस (₹)</label>
+                  <div class="input-currency-wrapper">
+                    <span class="currency-symbol">₹</span>
+                    <input type="number" id="entryAdvance" class="form-input" value="0" min="0" step="10">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="entryNotes" class="form-label" data-i18n="lbl_notes">काम का विवरण व टिप्पणी</label>
+                <input type="text" id="entryNotes" class="form-input" placeholder="उदा. 2 घंटे ओवरटाइम किया, सीमेंट मिक्सिंग" data-i18n-placeholder="ph_notes">
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block" style="margin-top: 0.5rem;" data-i18n="btn_save_work">
+                💾 हिसाब सेव करें (Save Entry)
+              </button>
+
+            </div>
+          </form>
+        </div>
+
+        <!-- Right Column: Ledger Slips List -->
+        <div class="app-card">
+          <div class="card-title-bar">
+            <h3 data-i18n="recent_slips_title">बाकी हिसाब पर्चियां (Balance Records)</h3>
+            <button class="btn-icon-narrate" data-narrate-key="balanceSlip" title="पर्ची के बारे में सुनें" aria-label="पर्ची के बारे में सुनें">
+              🔊
+            </button>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-bar">
+            <input type="text" id="filterThekedar" class="form-input" placeholder="ठेकेदार या साइट से खोजें..." data-i18n-placeholder="ph_search_records">
+            <select id="filterStatus" class="form-select">
+              <option value="all" data-i18n="filter_all">सभी रिकॉर्ड</option>
+              <option value="due" data-i18n="filter_due">केवल बकाया</option>
+              <option value="paid" data-i18n="filter_paid">केवल चुकता</option>
+            </select>
+          </div>
+
+          <!-- Records Container -->
+          <div id="recordsList" class="records-list" role="region" aria-live="polite">
+            <!-- Populated dynamically by wageTracker.js -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 2: STATUTORY LEGAL WAGE AUDITOR
+         ==================================================================== -->
+    <section id="view-verify" class="view-panel" aria-labelledby="verifyHeading">
+      <div class="section-banner">
+        <div class="section-title-wrap">
+          <h2 id="verifyHeading" data-i18n="verify_banner_title">⚖️ कानूनी मजदूरी जांच केंद्र</h2>
+          <p data-i18n="verify_banner_sub">अपने राज्य की सरकारी न्यूनतम मजदूरी से ठेकेदार की दर जांचें।</p>
+        </div>
+        <button class="btn-narrate" data-narrate-key="verifySection" aria-label="इस अनुभाग का विवरण सुनें">
+          🔊 <span data-i18n="btn_listen">सुनिए</span>
+        </button>
+      </div>
+
+      <div class="dashboard-columns">
+        
+        <!-- Left: Auditor Input Form -->
+        <div class="app-card">
+          <div class="card-title-bar">
+            <h3 data-i18n="calculator_card_title">सरकारी न्यूनतम मजदूरी कैलकुलेटर</h3>
+            <span class="badge badge-due">न्यूनतम मजदूरी अधिनियम 1948</span>
+          </div>
+
+          <div class="form-grid">
+            
+            <div class="form-group">
+              <label for="auditStateSelect" class="form-label" data-i18n="lbl_select_state">राज्य चुनें (Select State)</label>
+              <select id="auditStateSelect" class="form-select">
+                <option value="Delhi" selected>दिल्ली (Delhi NCT)</option>
+                <option value="Maharashtra">महाराष्ट्र (Maharashtra)</option>
+                <option value="Punjab">पंजाब (Punjab)</option>
+                <option value="Uttar Pradesh">उत्तर प्रदेश (Uttar Pradesh)</option>
+                <option value="Bihar">बिहार (Bihar)</option>
+                <option value="Haryana">हरियाणा (Haryana)</option>
+                <option value="Karnataka">कर्नाटक (Karnataka)</option>
+                <option value="West Bengal">पश्चिम बंगाल (West Bengal)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="auditSkillSelect" class="form-label" data-i18n="lbl_role">काम की श्रेणी (Skill Category)</label>
+              <select id="auditSkillSelect" class="form-select">
+                <option value="unskilled" selected data-i18n="opt_unskilled">अकुशल मजदूर (Unskilled / Helper)</option>
+                <option value="semi_skilled" data-i18n="opt_semiskilled">अर्ध-कुशल (Semi-Skilled / Asst. Mason)</option>
+                <option value="skilled" data-i18n="opt_skilled">कुशल कारीगर (Skilled / Mason / Electrician)</option>
+                <option value="highly_skilled" data-i18n="opt_highlyskilled">उच्च कुशल (Highly Skilled / Supervisor)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="auditWageInput" class="form-label" data-i18n="lbl_offered_wage">ठेकेदार द्वारा ऑफर की गई दैनिक मजदूरी (₹)</label>
+              <div class="input-currency-wrapper">
+                <span class="currency-symbol">₹</span>
+                <input type="number" id="auditWageInput" class="form-input" value="500" placeholder="500" min="0" step="10">
+              </div>
+              <span class="form-hint">ठेकेदार प्रतिदिन जितने रुपए देने को कह रहा है वह संख्या डालें।</span>
+            </div>
+
+            <button id="btnVerifyWage" type="button" class="btn btn-primary btn-block" data-i18n="btn_audit_wage">
+              ⚖️ कानूनी जांच करें (Verify Rate)
+            </button>
+
+            <!-- Dynamic Wage Theft Alert Box Container -->
+            <div id="auditResultBox" aria-live="assertive">
+              <!-- Result renders here with live theft calculation -->
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Official Statutory Matrix & Worker Rights -->
+        <div>
+          <div class="app-card">
+            <div class="card-title-bar">
+              <h3 data-i18n="statutory_reference_title">सरकारी न्यूनतम मजदूरी दर सूची (BOCW Floor Rates)</h3>
+            </div>
+            <div id="statutoryMatrixContainer">
+              <!-- Dynamically populated from wageTracker.js -->
+            </div>
+          </div>
+
+          <div class="app-card">
+            <div class="card-title-bar">
+              <h3 data-i18n="rights_card_title">असंगठित व प्रवासी कामगारों के 5 मौलिक अधिकार</h3>
+            </div>
+            <ul style="font-size: 0.85rem; line-height: 1.6; padding-left: 1.2rem; color: var(--color-text-main);">
+              <li><strong>अधिकतम 8 घंटे कार्य:</strong> 8 घंटे से अधिक काम कराने पर दोगुना मजदूरी (2x Overtime) देना कानूनी रूप से अनिवार्य है।</li>
+              <li><strong>साप्ताहिक अवकाश:</strong> 6 दिन लगातार काम के बाद 1 दिन का सवेतन या अनिवार्य विश्राम दिवस।</li>
+              <li><strong>पासबुक व हाजिरी पर्ची:</strong> इंटर-स्टेट माइग्रेंट वर्कमैन एक्ट 1979 के तहत ठेकेदार को लिखित पर्ची देना अनिवार्य है।</li>
+              <li><strong>पहचान पत्र जब्ती पर रोक:</strong> किसी भी मजदूर का आधार कार्ड या वोटर आईडी अपने पास बंधक रखना गैर-कानूनी है।</li>
+              <li><strong>सुरक्षा उपकरण व पेयजल:</strong> निर्माण स्थल पर पीने का साफ पानी, फर्स्ट-एड और हेलमेट ठेकेदार की जिम्मेदारी है।</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 3: CONTRACTOR DIRECTORY & COMMUNITY VETTING
+         ==================================================================== -->
+    <section id="view-contractors" class="view-panel" aria-labelledby="contractorHeading">
+      <div class="section-banner">
+        <div class="section-title-wrap">
+          <h2 id="contractorHeading" data-i18n="contractors_banner_title">👷 ठेकेदार डायरेक्टरी व जन-समीक्षा</h2>
+          <p data-i18n="contractors_banner_sub">काम लेने से पहले ठेकेदार की साख, समय पर भुगतान और सुरक्षा जांचें।</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <button id="btnOpenRateModal" class="btn btn-primary btn-small" data-i18n="btn_rate_new_contractor">
+            + ठेकेदार को रेटिंग दें
+          </button>
+          <button class="btn-narrate" data-narrate-key="reviewsSection" aria-label="इस अनुभाग का विवरण सुनें">
+            🔊 <span data-i18n="btn_listen">सुनिए</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Input -->
+      <div class="filter-bar">
+        <input type="text" id="searchContractorInput" class="form-input" placeholder="ठेकेदार, शहर या काम के प्रकार से खोजें..." data-i18n-placeholder="ph_search_contractor">
+      </div>
+
+      <!-- Contractor Cards Grid -->
+      <div id="contractorsList" class="contractor-grid">
+        <!-- Rendered by complaints.js -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VIEW 4: GUPT SHIKAYAT KENDRA (WHISTLEBLOWER & RETALIATION-PROOF PORTAL)
+         ==================================================================== -->
+    <section id="view-grievance" class="view-panel" aria-labelledby="grievanceHeading">
+      <div class="section-banner">
+        <div class="section-title-wrap">
+          <h2 id="grievanceHeading" data-i18n="grievance_banner_title">🛡️ गुप्त शिकायत केंद्र (Whistleblower Portal)</h2>
+          <p data-i18n="grievance_banner_sub">100% गोपनीय व सुरक्षित। आपकी पहचान कभी उजागर नहीं होगी।</p>
+        </div>
+        <button class="btn-narrate" data-narrate-key="grievanceSection" aria-label="इस अनुभाग का विवरण सुनें">
+          🔊 <span data-i18n="btn_listen">सुनिए</span>
+        </button>
+      </div>
+
+      <!-- Anonymity Shield Banner -->
+      <div class="anonymity-shield-banner">
+        <div class="shield-content">
+          <div class="shield-icon" aria-hidden="true">🔒</div>
+          <div>
+            <h3 style="font-size: 1.15rem; color: #ffffff;" data-i18n="shield_banner_title">पूर्ण पहचान सुरक्षा (Zero-Retaliation Guarantee)</h3>
+            <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.2rem;" data-i18n="shield_banner_desc">
+              आपका नाम, फोन व पहचान पूरी तरह गोपनीय रखी जाती है। ठेकेदार को आपकी जानकारी कभी नहीं दी जाती।
+            </p>
+          </div>
+        </div>
+        <button id="btnToggleAdmin" class="btn btn-secondary btn-small" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);" data-i18n="btn_toggle_admin">
+          👔 श्रम अधिकारी डैशबोर्ड (Inspector View)
+        </button>
+      </div>
+
+      <div class="dashboard-columns">
+        
+        <!-- Left: Whistleblower Form -->
+        <div class="app-card">
+          <div class="card-title-bar">
+            <h3 data-i18n="form_grievance_title">शोषण या मजदूरी चोरी की रिपोर्ट दर्ज करें</h3>
+            <span class="badge badge-due">100% गोपनीय</span>
+          </div>
+
+          <form id="formGrievance">
+            <div class="form-grid">
+              
+              <div class="form-group">
+                <label for="grievanceContractor" class="form-label" data-i18n="lbl_grievance_contractor">आरोपी ठेकेदार / साइट का नाम</label>
+                <input type="text" id="grievanceContractor" class="form-input" placeholder="उदा. शर्मा इंफ्रास्ट्रक्चर / मॉल कंस्ट्रक्शन साइट" data-i18n-placeholder="ph_grievance_contractor" required>
+              </div>
+
+              <div class="form-group">
+                <label for="grievanceLocation" class="form-label" data-i18n="lbl_grievance_location">घटना स्थल / शहर</label>
+                <input type="text" id="grievanceLocation" class="form-input" placeholder="उदा. सेक्टर 62, नोएडा, उत्तर प्रदेश" data-i18n-placeholder="ph_grievance_location" required>
+              </div>
+
+              <div class="form-group">
+                <label for="grievanceCategory" class="form-label" data-i18n="lbl_grievance_category">शिकायत का प्रकार (Category)</label>
+                <select id="grievanceCategory" class="form-select">
+                  <option value="wage_theft" data-i18n="opt_cat_wage_theft">मजदूरी नहीं दी या कम दी (Wage Theft)</option>
+                  <option value="withheld_documents" data-i18n="opt_cat_docs">आधार कार्ड या दस्तावेज जब्ती (Confiscated ID)</option>
+                  <option value="unsafe_site" data-i18n="opt_cat_unsafe">असुरक्षित कार्यस्थल व बिना सेफ्टी किट (Unsafe Site)</option>
+                  <option value="harassment" data-i18n="opt_cat_harassment">धमकी या शारीरिक/मानसिक प्रताड़ना (Abuse/Harassment)</option>
+                  <option value="overtime_unpaid" data-i18n="opt_cat_overtime">बिना भुगतान 12-14 घंटे काम (Forced Unpaid Overtime)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="grievanceDetails" class="form-label" data-i18n="lbl_grievance_details">घटना का पूरा विवरण</label>
+                <textarea id="grievanceDetails" class="form-textarea" placeholder="विस्तार से बताएं: कितने मजदूरों का पैसा रुका है, कब से काम कर रहे हैं..." data-i18n-placeholder="ph_grievance_details" required></textarea>
+              </div>
+
+              <!-- Anonymity Checkbox -->
+              <label class="checkbox-group" for="grievanceAnonCheckbox">
+                <input type="checkbox" id="grievanceAnonCheckbox" checked>
+                <div class="checkbox-text">
+                  <span class="checkbox-title" data-i18n="lbl_anonymous_toggle_title">मेरी पहचान 100% गुप्त रखें (Keep Identity Anonymous)</span>
+                  <span class="checkbox-desc" data-i18n="lbl_anonymous_toggle_desc">सिस्टम आपके फोन नंबर व नाम को हटाकर केवल क्रिप्टोग्राफिक टिकट जारी करेगा।</span>
+                </div>
+              </label>
+
+              <button type="submit" class="btn btn-danger btn-block" style="margin-top: 0.5rem;" data-i18n="btn_submit_grievance">
+                📢 गुप्त शिकायत भेजें (Submit Report)
+              </button>
+
+            </div>
+          </form>
+        </div>
+
+        <!-- Right: Status Tracker Card -->
+        <div class="app-card">
+          <div class="card-title-bar">
+            <h3 data-i18n="track_card_title">शिकायत स्थिति जांचें (Track Ticket ID)</h3>
+            <span class="badge badge-verified">लाइव ट्रैकिंग</span>
+          </div>
+
+          <p class="form-hint" style="margin-bottom: 0.75rem;">
+            शिकायत दर्ज करने पर मिले टिकट नंबर (उदा. <strong>#SH-9042</strong> या <strong>#SH-8719</strong>) को यहां डालकर वर्तमान विधिक स्थिति देखें।
+          </p>
+
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+            <input type="text" id="inputTrackTicket" class="form-input" placeholder="उदा. #SH-9042" data-i18n-placeholder="ph_enter_ticket">
+            <button id="btnTrackTicket" class="btn btn-secondary" style="min-width: 100px;" data-i18n="btn_track_ticket">
+              🔍 स्थिति देखें
+            </button>
+          </div>
+
+          <div id="trackResultContainer">
+            <!-- Timeline renders here dynamically -->
+            <div class="empty-state">
+              <div class="empty-state-icon">🛡️</div>
+              <p>ऊपर टिकट नंबर दर्ज करें या त्वरित डेमो के लिए <strong>#SH-9042</strong> लिखें।</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       MODALS & DIALOGS
+       ==================================================================== -->
+
+  <!-- Printable Slip Modal -->
+  <div id="slipModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="slipModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="slipModalTitle">🖨️ कानूनी हिसाब पर्ची (Printable Balance Slip)</h3>
+        <button class="btn-close-modal" aria-label="बंद करें">&times;</button>
+      </div>
+      <div class="modal-body" id="slipModalContent">
+        <!-- Rendered by wageTracker.js -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-modal-cancel">बंद करें</button>
+        <button id="btnTriggerPrint" class="btn btn-primary">🖨️ पर्ची प्रिंट करें (Print Slip)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticket Confirmation Modal -->
+  <div id="ticketModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ticketModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="ticketModalTitle">🛡️ गोपनीय शिकायत रसीद</h3>
+        <button class="btn-close-modal" aria-label="बंद करें">&times;</button>
+      </div>
+      <div class="modal-body" id="ticketModalContent">
+        <!-- Rendered by app.js -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-modal-cancel">ठीक है, समझ गया (Close)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rate Contractor Modal -->
+  <div id="rateContractorModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rateModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="rateModalTitle">⭐ ठेकेदार को रेटिंग दें (Rate Contractor)</h3>
+        <button class="btn-close-modal" aria-label="बंद करें">&times;</button>
+      </div>
+      <form id="formRateContractor">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="rateModalThekedarName" class="form-label">ठेकेदार का नाम</label>
+              <input type="text" id="rateModalThekedarName" class="form-input" required>
+            </div>
+            <div class="form-grid two-col">
+              <div class="form-group">
+                <label for="rateModalTrade" class="form-label">काम का प्रकार</label>
+                <input type="text" id="rateModalTrade" class="form-input" placeholder="उदा. सिविल/राजमिस्त्री">
+              </div>
+              <div class="form-group">
+                <label for="rateModalCity" class="form-label">शहर / क्षेत्र</label>
+                <input type="text" id="rateModalCity" class="form-input" placeholder="उदा. दिल्ली NCR">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rateModalStars" class="form-label">रेटिंग (Stars)</label>
+              <select id="rateModalStars" class="form-select">
+                <option value="5">⭐⭐⭐⭐⭐ (5/5) बहुत बढ़िया, समय पर भुगतान</option>
+                <option value="4" selected>⭐⭐⭐⭐ (4/5) अच्छा ठेकेदार</option>
+                <option value="3">⭐⭐⭐ (3/5) सामान्य, कभी-कभी देरी</option>
+                <option value="2">⭐⭐ (2/5) खराब, भुगतान अटकाता है</option>
+                <option value="1">⭐ (1/5) बहुत खराब, मजदूरी चोरी</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="rateModalFeedback" class="form-label">आपका अनुभव / समीक्षा</label>
+              <textarea id="rateModalFeedback" class="form-textarea" placeholder="क्या यह ठेकेदार समय पर पैसे देता है? साइट पर पानी और सुरक्षा कैसी है?"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-modal-cancel">रद्द करें</button>
+          <button type="submit" class="btn btn-primary">⭐ रेटिंग सबमिट करें</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin / Inspector Demo Modal -->
+  <div id="adminModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+    <div class="modal-card" style="max-width: 720px;">
+      <div class="modal-header">
+        <h3 id="adminModalTitle">👔 श्रम प्रवर्तन अधिकारी (DLC) लाइव डैशबोर्ड</h3>
+        <button class="btn-close-modal" aria-label="बंद करें">&times;</button>
+      </div>
+      <div class="modal-body" id="adminModalContent">
+        <!-- Rendered by app.js -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-modal-cancel">डैशबोर्ड बंद करें</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Accessible Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <span class="academic-badge">Academic Project · Lovely Professional University (CA1 Assessment)</span>
+      </div>
+      <div>
+        <strong>श्रम स्तंभ (Shram Stambh)</strong> · Client-Side Welfare & Legal Infrastructure for Migrant Labor
+      </div>
+      <div style="font-size: 0.75rem; color: var(--color-text-muted);">
+        100% Free Tier Native · 0 KB External Library Weight · Client Boot Latency &lt; 150ms · WCAG 2.1 AA Accessible
+      </div>
+      <div style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 0.25rem;">
+        राष्ट्रीय श्रम हेल्पलाइन (National Labour Helpline): <strong>14434</strong> · आपातकालीन पुलिस: <strong>112</strong>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Pure Vanilla Modular Scripts (ES6+) -->
+  <script src="js/speech.js"></script>
+  <script src="js/wageTracker.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Service Worker Registration for PWA Offline Resilience -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(() => {
+          console.log('Shram Stambh Service Worker Registered.');
+        }).catch(err => {
+          console.warn('SW registration failed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

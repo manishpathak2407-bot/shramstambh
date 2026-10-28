@@ -11,27 +11,19 @@ const SpeechNarrator = (function () {
   let isSpeaking = false;
   let activeNarrateBtn = null;
 
-  // Cached voice references
-  let hindiVoice = null;
-  let englishVoice = null;
+  let indianVoice = null;
 
   function initVoices() {
     if (!synth) return;
     const voices = synth.getVoices();
     
-    // Look for Indian Hindi voices
-    hindiVoice = voices.find(v => v.lang === 'hi-IN' || v.lang === 'hi_IN' || v.name.toLowerCase().includes('hindi')) 
-                 || voices.find(v => v.lang.startsWith('hi')) 
+    // Look for Indian English or Hindi voices
+    indianVoice = voices.find(v => v.lang === 'en-IN') 
+                 || voices.find(v => v.lang === 'hi-IN') 
+                 || voices.find(v => v.lang.startsWith('en')) 
                  || null;
-
-    // Look for Indian English or standard English voices
-    englishVoice = voices.find(v => v.lang === 'en-IN') 
-                   || voices.find(v => v.lang === 'en-GB') 
-                   || voices.find(v => v.lang.startsWith('en')) 
-                   || null;
   }
 
-  // Voices are loaded asynchronously in Chrome/Edge
   if (synth) {
     if (synth.onvoiceschanged !== undefined) {
       synth.onvoiceschanged = initVoices;
@@ -39,36 +31,22 @@ const SpeechNarrator = (function () {
     initVoices();
   }
 
-  /**
-   * Speak arbitrary text in specified or current active language
-   */
   function speak(text, options = {}) {
     if (!synth) {
       console.warn("SpeechSynthesis is not supported on this browser.");
       return;
     }
 
-    // Cancel any ongoing speech
     stop();
 
-    const lang = options.lang || (window.currentLocale === 'en' ? 'en' : 'hi');
     const utterance = new SpeechSynthesisUtterance(text);
     currentUtterance = utterance;
 
-    // Select appropriate voice
-    if (lang === 'hi') {
-      utterance.lang = 'hi-IN';
-      if (hindiVoice) utterance.voice = hindiVoice;
-      utterance.rate = 0.95; // Slightly slower for clear rural Hindi comprehension
-      utterance.pitch = 1.0;
-    } else {
-      utterance.lang = 'en-IN';
-      if (englishVoice) utterance.voice = englishVoice;
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
-    }
+    utterance.lang = options.lang || 'en-IN';
+    if (indianVoice) utterance.voice = indianVoice;
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
 
-    // Update UI elements during speech
     const speechBar = document.getElementById('speechBar');
     const speechText = document.getElementById('speechText');
     const triggerBtn = options.triggerBtn || null;
@@ -115,37 +93,18 @@ const SpeechNarrator = (function () {
     cleanUpSpeechState();
   }
 
-  /**
-   * Pre-composed acoustic narrative explanations for core system views
-   */
   const narratives = {
-    khataSection: {
-      hi: "श्रम स्तंभ डिजिटल खाता में आपका स्वागत है। यहाँ आप अपनी रोज़ की तय मजदूरी और मिला हुआ एडवांस दर्ज कर सकते हैं। सिस्टम अपने आप आपका बकाया हिसाब निकाल देगा और आप कानूनी पर्ची भी डाउनलोड कर सकते हैं।",
-      en: "Welcome to Shram Stambh Digital Ledger. Here you can record your daily agreed wage and advance payments. The system automatically computes your outstanding balance and generates official printable wage slips."
-    },
-    verifySection: {
-      hi: "कानूनी मजदूरी जांच केंद्र। अपने राज्य और काम की श्रेणी चुनें और ठेकेदार द्वारा दी जा रही मजदूरी डालें। यदि मजदूरी सरकारी न्यूनतम दर से कम है, तो यह तुरंत मजदूरी चोरी अलर्ट देगा।",
-      en: "Statutory Wage Auditor. Select your state and skill category to verify contractor wages against official legal minimum wage floors. If underpaid, it triggers an instant Wage Theft Alert."
-    },
-    reviewsSection: {
-      hi: "ठेकेदार डायरेक्टरी व रेटिंग। यहाँ आप काम स्वीकार करने से पहले ठेकेदार की साख, समय पर भुगतान का रिकॉर्ड और सुरक्षा रेटिंग देख सकते हैं। आप भी अपना अनुभव साझा कर सकते हैं।",
-      en: "Contractor Directory & Community Ratings. Vet contractors before taking a job. Check wage timeliness, safety score, and community feedback from fellow workers."
-    },
-    grievanceSection: {
-      hi: "गुप्त शिकायत केंद्र। यहाँ आप बिना अपनी पहचान बताए मजदूरी चोरी या दुर्व्यवहार की शिकायत दर्ज कर सकते हैं। आपको एक गोपनीय टिकट नंबर मिलेगा जिससे आप जांच की स्थिति देख सकते हैं।",
-      en: "Gupt Shikayat Whistleblower Portal. Submit wage theft or abuse complaints with 100 percent anonymity. Receive a secure tracking ticket ID to monitor labour enforcement actions."
-    },
-    balanceSlip: {
-      hi: "यह आपकी कानूनी बकाया हिसाब पर्ची है। इसमें आपका नाम, ठेकेदार का नाम, काम का विवरण, कुल मजदूरी और बकाया राशि दर्ज है। इसे श्रम न्यायालय या पुलिस में सबूत के तौर पर इस्तेमाल किया जा सकता है।",
-      en: "This is your legally valid balance wage slip showing employer, agreed wage, advance received, and net balance due. It can serve as admissible evidence in labour disputes."
-    }
+    khataSection: "Welcome to Shram Stambh Digital Wage Ledger. Here you can record your daily agreed wage and advance payments. The system automatically computes your outstanding balance and generates official printable wage slips. श्रम स्तंभ डिजिटल खाता में आपका स्वागत है। यहाँ आप अपनी दैनिक मजदूरी और एडवांस का पक्का हिसाब रख सकते हैं।",
+    verifySection: "Statutory Wage Auditor. Select your state and skill tier to verify contractor wages against official legal minimum wage floors. If underpaid, it triggers an instant Wage Theft Alert. कानूनी मजदूरी जांच केंद्र। अपने राज्य की सरकारी न्यूनतम दर से ठेकेदार की मजदूरी जांचें।",
+    reviewsSection: "Contractor Directory & Community Ratings. Vet contractors before taking a job. Check wage timeliness, safety score, and community feedback. ठेकेदार डायरेक्टरी। काम स्वीकार करने से पहले ठेकेदार की साख और समय पर भुगतान का रिकॉर्ड देखें।",
+    grievanceSection: "Whistleblower Portal. Submit wage theft or abuse complaints with 100 percent anonymity. Receive a secure tracking ticket ID to monitor enforcement actions. गुप्त शिकायत केंद्र। बिना पहचान बताए मजदूरी चोरी या प्रताड़ना की गोपनीय रिपोर्ट दर्ज करें।",
+    balanceSlip: "This is your legally valid balance wage slip showing employer, agreed wage, advance received, and net balance due. It serves as admissible evidence in labour disputes. यह आपकी कानूनी बकाया हिसाब पर्ची है।"
   };
 
   function narrateKey(key, triggerBtn = null) {
-    const lang = window.currentLocale || 'hi';
-    const text = narratives[key] ? narratives[key][lang] : null;
+    const text = narratives[key] || null;
     if (text) {
-      speak(text, { lang, triggerBtn });
+      speak(text, { triggerBtn });
     }
   }
 

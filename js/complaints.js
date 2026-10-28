@@ -1,6 +1,7 @@
 /**
- * SHRAM STAMBH (श्रम स्तंभ) - Gupt Shikayat Kendra & Contractor Vetting Engine
+ * SHRAM STAMBH (श्रम स्तंभ) - Whistleblower & Contractor Vetting Engine
  * Tier 2: Whistleblower Anonymity & Grievance Hash Engine
+ * English-First Presentation with Bracketed Hindi Translations
  * Generates cryptographic ticket IDs, sanitizes worker identities,
  * tracks dispute progression, and maintains peer contractor reviews.
  */
@@ -17,14 +18,13 @@ const GrievanceModule = (function () {
       contractor: "Apex Tower 4 Site Thekedar",
       location: "Sector 62, Noida, UP",
       category: "wage_theft",
-      categoryText: "Wage Theft (मजदूरी नहीं दी)",
-      description: "15 din se 22 mazdooron ki majdoori roki hui hai. Mangne par site se nikaalne ki dhamki deta hai.",
+      categoryText: "Wage Theft / Slashed Pay (मजदूरी चोरी)",
+      description: "15 days unpaid wages for 22 construction workers. Thekedar threatens dismissal upon demand.",
       anonymous: true,
-      workerName: "Anonymous Worker",
+      workerName: "Anonymous Worker (पहचान गुप्त)",
       contact: "HIDDEN_BY_SANITY_ENGINE",
       status: "notice_issued",
-      statusTextHi: "ठेकेदार को विधिक नोटिस जारी",
-      statusTextEn: "Legal Notice Issued to Contractor",
+      statusText: "Show-Cause Notice Issued to Contractor (ठेकेदार को विधिक नोटिस)",
       officerNotes: "Sub-Divisional Labour Commissioner dispatched compliance officer to inspect site muster roll.",
       updatedAt: "2026-10-27T14:30:00"
     },
@@ -34,15 +34,14 @@ const GrievanceModule = (function () {
       contractor: "Rai & Sons Infrastructure",
       location: "Bhiwandi Warehousing Hub, Maharashtra",
       category: "withheld_documents",
-      categoryText: "Aadhaar Card Withheld (दस्तावेज़ जब्ती)",
-      description: "Contractor has confiscated original Aadhaar cards of 8 labourers and refuses to return them until season ends.",
+      categoryText: "Confiscated Aadhaar / Personal ID (दस्तावेज़ जब्ती)",
+      description: "Contractor has withheld original Aadhaar cards of 8 laborers and refuses to return them until the project completes.",
       anonymous: true,
-      workerName: "Anonymous Worker",
+      workerName: "Anonymous Worker (पहचान गुप्त)",
       contact: "HIDDEN_BY_SANITY_ENGINE",
       status: "under_review",
-      statusTextHi: "श्रम प्रकोष्ठ द्वारा जांच जारी",
-      statusTextEn: "Under Investigation by Labour Cell",
-      officerNotes: "Violation of Inter-State Migrant Workmen Act Section 17. Summon dispatched.",
+      statusText: "Under Investigation by Labour Cell (श्रम प्रकोष्ठ द्वारा जांच)",
+      officerNotes: "Violation of Inter-State Migrant Workmen Act Section 17. Summon dispatched to employer.",
       updatedAt: "2026-10-23T11:15:00"
     }
   ];
@@ -58,9 +57,8 @@ const GrievanceModule = (function () {
       timelyPayRate: "92%",
       safetyScore: "B+",
       verified: true,
-      badgeTextHi: "सत्यापित ठेकेदार",
-      badgeTextEn: "Verified Contractor",
-      topFeedback: "Pays weekly advance promptly. Overtime sometimes requires gentle reminder."
+      badgeText: "Verified Contractor (सत्यापित ठेकेदार)",
+      topFeedback: "Pays weekly advance promptly. Overtime clearance requires gentle reminder."
     },
     {
       id: "CON-02",
@@ -72,9 +70,8 @@ const GrievanceModule = (function () {
       timelyPayRate: "98%",
       safetyScore: "A",
       verified: true,
-      badgeTextHi: "शीर्ष सुरक्षा प्रमाणित",
-      badgeTextEn: "Top Safety Certified",
-      topFeedback: "Provides helmets, boots, and clean drinking water on site. Daily attendance signed on card."
+      badgeText: "Top Safety Certified (शीर्ष सुरक्षा)",
+      topFeedback: "Provides safety helmets, boots, and clean drinking water on site. Daily muster signed."
     },
     {
       id: "CON-03",
@@ -86,9 +83,8 @@ const GrievanceModule = (function () {
       timelyPayRate: "45%",
       safetyScore: "D",
       verified: false,
-      badgeTextHi: "⚠️ विलंबित भुगतान रिपोर्ट",
-      badgeTextEn: "⚠️ High Wage Delay Alert",
-      topFeedback: "Delays final settlement for months. Beware of oral promises without written slip."
+      badgeText: "⚠️ Wage Delay Alert (विलंबित भुगतान)",
+      topFeedback: "Delays final settlement for months. Avoid accepting verbal wage commitments without written slips."
     },
     {
       id: "CON-04",
@@ -100,9 +96,8 @@ const GrievanceModule = (function () {
       timelyPayRate: "100%",
       safetyScore: "A+",
       verified: true,
-      badgeTextHi: "सत्यापित ठेकेदार",
-      badgeTextEn: "Verified Contractor",
-      topFeedback: "Full daily wage cleared every Saturday evening without deduction."
+      badgeText: "Verified Contractor (सत्यापित ठेकेदार)",
+      topFeedback: "Full daily wage cleared every Saturday evening without any unexpected deductions."
     }
   ];
 
@@ -140,23 +135,15 @@ const GrievanceModule = (function () {
     localStorage.setItem(CONTRACTORS_STORAGE_KEY, JSON.stringify(data));
   }
 
-  /**
-   * Generates cryptographic style Ticket Token
-   * Format: #SH-XXXX where XXXX is 4-digit pseudorandom hex/decimal
-   */
   function generateTicketId() {
     const num = Math.floor(1000 + Math.random() * 9000);
     return `#SH-${num}`;
   }
 
-  /**
-   * Submit Grievance with client-side identity sanitization
-   */
   function submitGrievance(formData) {
     const grievances = getGrievances();
     const isAnonymous = formData.anonymous !== false;
 
-    // Sanitize payload to guarantee worker anonymity if checked
     const sanitizedData = {
       ticketId: generateTicketId(),
       date: new Date().toISOString().split('T')[0],
@@ -169,8 +156,7 @@ const GrievanceModule = (function () {
       workerName: isAnonymous ? "Anonymous Worker (पहचान सुरक्षित)" : (formData.workerName || "Worker"),
       contact: isAnonymous ? "HIDDEN_BY_SANITY_ENGINE" : (formData.contact || ""),
       status: "submitted",
-      statusTextHi: "शिकायत दर्ज (अन्वेषण हेतु प्रेषित)",
-      statusTextEn: "Grievance Registered (Queued for Inspection)",
+      statusText: "Grievance Registered (शिकायत दर्ज - जांच हेतु प्रेषित)",
       officerNotes: "Assigned automated case ID. Priority dispatch to relevant District Labour Office.",
       updatedAt: new Date().toISOString()
     };
@@ -182,29 +168,22 @@ const GrievanceModule = (function () {
   }
 
   function getCategoryLabel(cat) {
-    const isHi = window.currentLocale !== 'en';
     switch (cat) {
-      case 'wage_theft': return isHi ? 'मजदूरी चोरी (Wage Theft)' : 'Wage Theft';
-      case 'withheld_documents': return isHi ? 'दस्तावेज़/आधार जब्ती (Confiscated ID)' : 'Confiscated Documents';
-      case 'unsafe_site': return isHi ? 'असुरक्षित कार्यस्थल (Unsafe Site)' : 'Unsafe Worksite';
-      case 'harassment': return isHi ? 'दुर्व्यवहार या धमकी (Harassment/Threats)' : 'Harassment/Threats';
-      case 'overtime_unpaid': return isHi ? 'बिना भुगतान ओवरटाइम (Unpaid Overtime)' : 'Unpaid Overtime';
-      default: return isHi ? 'सामान्य श्रम शिकायत (General Grievance)' : 'General Grievance';
+      case 'wage_theft': return 'Wage Theft / Slashed Pay (मजदूरी चोरी)';
+      case 'withheld_documents': return 'Confiscated Aadhaar / Personal ID (दस्तावेज़ जब्ती)';
+      case 'unsafe_site': return 'Unsafe Worksite / No Safety Kit (असुरक्षित कार्यस्थल)';
+      case 'harassment': return 'Verbal Threats / Physical Harassment (धमकी या प्रताड़ना)';
+      case 'overtime_unpaid': return 'Forced Unpaid Overtime (बिना भुगतान ओवरटाइम)';
+      default: return 'General Labour Grievance (सामान्य श्रम शिकायत)';
     }
   }
 
-  /**
-   * Lookup status by Ticket ID
-   */
   function trackTicket(ticketId) {
     const cleaned = ticketId.trim().toUpperCase();
     const grievances = getGrievances();
     return grievances.find(g => g.ticketId.toUpperCase() === cleaned || g.ticketId.replace('#', '').toUpperCase() === cleaned.replace('#', '')) || null;
   }
 
-  /**
-   * Add contractor review
-   */
   function addContractorReview(reviewData) {
     const contractors = getContractors();
     const existing = contractors.find(c => c.name.toLowerCase() === reviewData.contractorName.toLowerCase().trim());
@@ -228,9 +207,8 @@ const GrievanceModule = (function () {
         timelyPayRate: ratingNum >= 4 ? "90%" : "60%",
         safetyScore: ratingNum >= 4 ? "A" : "C",
         verified: false,
-        badgeTextHi: "नया ठेकेदार",
-        badgeTextEn: "New Contractor",
-        topFeedback: reviewData.feedback || "First worker feedback recorded."
+        badgeText: "New Contractor (नया ठेकेदार)",
+        topFeedback: reviewData.feedback || "First worker review recorded."
       });
     }
 
@@ -249,14 +227,12 @@ const GrievanceModule = (function () {
                               c.city.toLowerCase().includes(searchQuery.toLowerCase()));
     }
 
-    const isHi = window.currentLocale !== 'en';
-
     if (list.length === 0) {
       container.innerHTML = `
         <div class="empty-state" style="grid-column: 1/-1;">
           <div class="empty-state-icon">🔍</div>
-          <p><strong>${isHi ? 'कोई ठेकेदार नहीं मिला।' : 'No contractors found.'}</strong></p>
-          <p class="form-hint">${isHi ? 'नया ठेकेदार जोड़ने के लिए नीचे दिए गए बटन का उपयोग करें।' : 'Use the button below to rate and add a new contractor.'}</p>
+          <p><strong>No contractors found <span class="hi-bracket">(कोई ठेकेदार नहीं मिला)</span></strong></p>
+          <p class="form-hint">Use the button above to rate and add a new contractor.</p>
         </div>
       `;
       return;
@@ -272,19 +248,19 @@ const GrievanceModule = (function () {
               <div style="font-size: 0.8rem; color: var(--color-text-muted);">🔨 ${escapeHTML(c.trade)} · 📍 ${escapeHTML(c.city)}</div>
             </div>
             <span class="badge ${c.verified ? 'badge-verified' : 'badge-due'}">
-              ${isHi ? c.badgeTextHi : c.badgeTextEn}
+              ${c.badgeText}
             </span>
           </div>
 
           <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0;">
             <span class="rating-stars">${stars}</span>
             <strong style="font-size: 1.1rem; font-family: var(--font-mono);">${c.rating}</strong>
-            <span style="font-size: 0.75rem; color: var(--color-text-muted);">(${c.reviewsCount} ${isHi ? 'समीक्षाएं' : 'reviews'})</span>
+            <span style="font-size: 0.75rem; color: var(--color-text-muted);">(${c.reviewsCount} reviews <span class="hi-bracket">समीक्षाएं</span>)</span>
           </div>
 
           <div class="score-badge-row">
-            <span class="score-pill">💰 ${isHi ? 'समय पर भुगतान' : 'Pay Timeliness'}: <strong>${c.timelyPayRate}</strong></span>
-            <span class="score-pill">⛑️ ${isHi ? 'सुरक्षा ग्रेड' : 'Safety'}: <strong>${c.safetyScore}</strong></span>
+            <span class="score-pill">💰 Pay Timeliness <span class="hi-bracket">(समय पर भुगतान)</span>: <strong>${c.timelyPayRate}</strong></span>
+            <span class="score-pill">⛑️ Safety <span class="hi-bracket">(सुरक्षा)</span>: <strong>${c.safetyScore}</strong></span>
           </div>
 
           <p style="font-size: 0.8rem; color: var(--color-text-muted); font-style: italic; margin-top: 0.35rem;">
@@ -293,10 +269,10 @@ const GrievanceModule = (function () {
 
           <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
             <button class="btn btn-small btn-secondary btn-quick-rate" data-name="${escapeHTML(c.name)}" style="flex: 1;">
-              ⭐ ${isHi ? 'रेटिंग दें' : 'Rate'}
+              ⭐ Rate <span class="hi-bracket">(रेटिंग)</span>
             </button>
             <button class="btn btn-small btn-secondary btn-prefill-khata" data-name="${escapeHTML(c.name)}" style="flex: 1;">
-              📝 ${isHi ? 'खाता में जोड़ें' : 'Add to Khata'}
+              📝 Add to Khata <span class="hi-bracket">(खाता में जोड़ें)</span>
             </button>
           </div>
         </article>
@@ -323,7 +299,7 @@ const GrievanceModule = (function () {
           input.value = name;
           input.focus();
         }
-        window.showToast(`${window.currentLocale === 'en' ? 'Contractor selected: ' : 'ठेकेदार चुना गया: '} ${name}`);
+        window.showToast(`Contractor selected: ${name} (ठेकेदार चुना गया)`);
       });
     });
   }

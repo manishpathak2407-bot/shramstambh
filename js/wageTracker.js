@@ -1,7 +1,8 @@
 /**
  * SHRAM STAMBH (श्रम स्तंभ) - Wage Khata & Statutory Legal Auditor Engine
  * Tier 2: Business Logic & Processing Engine
- * Handles daily wage ledger CRUD, balance calculations, receipt generation,
+ * English-First Presentation with Bracketed Hindi Translations (कम साक्षरता सहायता)
+ * Daily wage ledger CRUD, balance calculations, receipt generation,
  * and cross-validates contractor offers against state BOCW statutory rate floors.
  */
 
@@ -9,19 +10,20 @@ const WageTracker = (function () {
   const STORAGE_KEY = 'shram_wage_records';
 
   // Statutory Minimum Wage Matrix (Daily rates in INR)
-  // Cross-referenced with official State Gazette Minimum Wages & BOCW floor rates
   const STATUTORY_RATES = {
     "Delhi": {
-      name_hi: "दिल्ली (Delhi NCT)",
+      name: "Delhi (Delhi NCT)",
+      name_hi: "दिल्ली",
       unskilled: 750,
       semi_skilled: 825,
       skilled: 908,
       highly_skilled: 999,
-      act: "Delhi Minimum Wages Act (Notification F.No.12(142)/02/MW/VII)",
+      act: "Delhi Minimum Wages Notification (F.No.12(142)/02/MW/VII)",
       helpline: "14434"
     },
     "Maharashtra": {
-      name_hi: "महाराष्ट्र (Maharashtra)",
+      name: "Maharashtra",
+      name_hi: "महाराष्ट्र",
       unskilled: 570,
       semi_skilled: 620,
       skilled: 680,
@@ -30,7 +32,8 @@ const WageTracker = (function () {
       helpline: "1800-22-1244"
     },
     "Punjab": {
-      name_hi: "पंजाब (Punjab)",
+      name: "Punjab",
+      name_hi: "पंजाब",
       unskilled: 450,
       semi_skilled: 490,
       skilled: 540,
@@ -39,7 +42,8 @@ const WageTracker = (function () {
       helpline: "14434"
     },
     "Uttar Pradesh": {
-      name_hi: "उत्तर प्रदेश (Uttar Pradesh)",
+      name: "Uttar Pradesh",
+      name_hi: "उत्तर प्रदेश",
       unskilled: 415,
       semi_skilled: 455,
       skilled: 510,
@@ -48,7 +52,8 @@ const WageTracker = (function () {
       helpline: "1800-180-5160"
     },
     "Bihar": {
-      name_hi: "बिहार (Bihar)",
+      name: "Bihar",
+      name_hi: "बिहार",
       unskilled: 395,
       semi_skilled: 410,
       skilled: 500,
@@ -57,7 +62,8 @@ const WageTracker = (function () {
       helpline: "1800-345-6262"
     },
     "Haryana": {
-      name_hi: "हरियाणा (Haryana)",
+      name: "Haryana",
+      name_hi: "हरियाणा",
       unskilled: 425,
       semi_skilled: 470,
       skilled: 520,
@@ -66,7 +72,8 @@ const WageTracker = (function () {
       helpline: "1800-180-2129"
     },
     "Karnataka": {
-      name_hi: "कर्नाटक (Karnataka)",
+      name: "Karnataka",
+      name_hi: "कर्नाटक",
       unskilled: 550,
       semi_skilled: 600,
       skilled: 670,
@@ -75,7 +82,8 @@ const WageTracker = (function () {
       helpline: "155214"
     },
     "West Bengal": {
-      name_hi: "पश्चिम बंगाल (West Bengal)",
+      name: "West Bengal",
+      name_hi: "पश्चिम बंगाल",
       unskilled: 400,
       semi_skilled: 440,
       skilled: 485,
@@ -85,7 +93,7 @@ const WageTracker = (function () {
     }
   };
 
-  // Pre-seeded initial records for instant viva demonstration
+  // Seed Data
   const SEED_DATA = [
     {
       id: "REC-2026-001",
@@ -146,7 +154,6 @@ const WageTracker = (function () {
     try {
       return JSON.parse(raw);
     } catch (e) {
-      console.error("Error parsing wage records:", e);
       return [];
     }
   }
@@ -242,20 +249,18 @@ const WageTracker = (function () {
       container.innerHTML = `
         <div class="empty-state">
           <div class="empty-state-icon">📋</div>
-          <p><strong data-i18n="no_records_found">${window.currentLocale === 'en' ? 'No work records found.' : 'कोई हिसाब नहीं मिला।'}</strong></p>
-          <p class="form-hint">${window.currentLocale === 'en' ? 'Use the form to log your daily work.' : 'ऊपर दिए गए फॉर्म से नया काम दर्ज करें।'}</p>
+          <p><strong>No work records found <span class="hi-bracket">(कोई हिसाब नहीं मिला)</span></strong></p>
+          <p class="form-hint">Use the form to log your daily work <span class="hi-bracket">(नया काम दर्ज करें)</span>.</p>
         </div>
       `;
       return;
     }
 
-    const isHi = window.currentLocale !== 'en';
-
     container.innerHTML = records.map(r => {
       const isDue = r.balance > 0;
       const statusBadge = isDue 
-        ? `<span class="badge badge-due">${isHi ? 'बकाया' : 'Due'}: ₹${r.balance}</span>`
-        : `<span class="badge badge-paid">${isHi ? 'पूर्ण चुकता' : 'Paid in Full'}</span>`;
+        ? `<span class="badge badge-due">Due <span class="hi-bracket">(बकाया)</span>: ₹${r.balance}</span>`
+        : `<span class="badge badge-paid">Paid in Full <span class="hi-bracket">(पूर्ण चुकता)</span></span>`;
 
       return `
         <article class="record-card ${isDue ? 'status-due' : 'status-paid'}" data-id="${r.id}">
@@ -272,15 +277,15 @@ const WageTracker = (function () {
 
           <div class="record-math">
             <div class="math-item">
-              <span class="math-item-label">${isHi ? 'तय मजदूरी' : 'Agreed Wage'}</span>
+              <span class="math-item-label">Agreed Wage <span class="hi-bracket">(तय)</span></span>
               <span class="math-item-val">₹${r.wage}</span>
             </div>
             <div class="math-item">
-              <span class="math-item-label">${isHi ? 'प्राप्त एडवांस' : 'Advance'}</span>
+              <span class="math-item-label">Advance <span class="hi-bracket">(एडवांस)</span></span>
               <span class="math-item-val" style="color: #0284c7;">- ₹${r.advance}</span>
             </div>
             <div class="math-item">
-              <span class="math-item-label">${isHi ? 'बाकी बकाया' : 'Net Due'}</span>
+              <span class="math-item-label">Net Due <span class="hi-bracket">(बकाया)</span></span>
               <span class="math-item-val ${isDue ? 'stat-value due-text' : 'stat-value paid-text'}" style="font-size: 1.1rem;">₹${r.balance}</span>
             </div>
           </div>
@@ -288,9 +293,9 @@ const WageTracker = (function () {
           ${r.notes ? `<div style="font-size: 0.8rem; color: var(--color-text-muted);">📝 ${escapeHTML(r.notes)}</div>` : ''}
 
           <div class="record-actions">
-            ${isDue ? `<button class="btn btn-small btn-success btn-mark-paid" data-id="${r.id}" title="${isHi ? 'पूरा भुगतान दर्ज करें' : 'Mark full payment'}">✓ ${isHi ? 'चुकता हुआ' : 'Mark Paid'}</button>` : ''}
-            <button class="btn btn-small btn-secondary btn-print-slip" data-id="${r.id}" title="${isHi ? 'कानूनी पर्ची बनाएं' : 'Generate slip'}">🖨️ ${isHi ? 'पर्ची' : 'Slip'}</button>
-            <button class="btn btn-small btn-secondary btn-delete-rec" data-id="${r.id}" style="color: var(--color-danger);" title="${isHi ? 'हटाएं' : 'Delete'}">✕</button>
+            ${isDue ? `<button class="btn btn-small btn-success btn-mark-paid" data-id="${r.id}" title="Mark full payment">✓ Mark Paid <span class="hi-bracket">(चुकता)</span></button>` : ''}
+            <button class="btn btn-small btn-secondary btn-print-slip" data-id="${r.id}" title="Generate printable slip">🖨️ Slip <span class="hi-bracket">(पर्ची)</span></button>
+            <button class="btn btn-small btn-secondary btn-delete-rec" data-id="${r.id}" style="color: var(--color-danger);" title="Delete record">✕</button>
           </div>
         </article>
       `;
@@ -304,17 +309,16 @@ const WageTracker = (function () {
       btn.addEventListener('click', (e) => {
         const id = e.currentTarget.getAttribute('data-id');
         markAsPaid(id);
-        window.showToast(window.currentLocale === 'en' ? 'Wage marked as fully paid!' : 'मजदूरी चुकता दर्ज हो गई!');
+        window.showToast('Wage marked as fully paid! (मजदूरी चुकता दर्ज हो गई)');
       });
     });
 
     document.querySelectorAll('.btn-delete-rec').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = e.currentTarget.getAttribute('data-id');
-        const confirmMsg = window.currentLocale === 'en' ? 'Are you sure you want to delete this record?' : 'क्या आप यह रिकॉर्ड हटाना चाहते हैं?';
-        if (confirm(confirmMsg)) {
+        if (confirm('Are you sure you want to delete this record? (क्या आप यह रिकॉर्ड हटाना चाहते हैं?)')) {
           deleteRecord(id);
-          window.showToast(window.currentLocale === 'en' ? 'Record deleted.' : 'रिकॉर्ड हटा दिया गया।');
+          window.showToast('Record deleted. (रिकॉर्ड हटा दिया गया)');
         }
       });
     });
@@ -334,53 +338,51 @@ const WageTracker = (function () {
 
     const modal = document.getElementById('slipModal');
     const container = document.getElementById('slipModalContent');
-    const isHi = window.currentLocale !== 'en';
 
-    // Generate a pseudo-cryptographic slip serial verification hash
     const slipHash = `SS-${rec.date.replace(/-/g, '')}-${rec.id.replace('REC-', '')}`;
 
     container.innerHTML = `
       <div class="slip-container" id="printableSlipArea">
         <div class="slip-header">
-          <h2>श्रम अधिकार हिसाब पर्ची (Wage Slip)</h2>
-          <p>श्रम कल्याण व न्यूनतम मजदूरी अनुपालन साक्ष्य · Shram Stambh</p>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; margin-top: 0.2rem;">पर्ची क्रमांक / SLIP NO: <strong>#${slipHash}</strong></p>
+          <h2>Wage Slip & Balance Voucher <span class="hi-bracket">(श्रम अधिकार हिसाब पर्ची)</span></h2>
+          <p>Statutory Minimum Wage & BOCW Compliance Evidence · Shram Stambh <span class="hi-bracket">(श्रम स्तंभ)</span></p>
+          <p style="font-family: var(--font-mono); font-size: 0.75rem; margin-top: 0.2rem;">SLIP NO / पर्ची क्रमांक: <strong>#${slipHash}</strong></p>
         </div>
 
         <div class="slip-meta-grid">
-          <div><strong>${isHi ? 'कामगार का नाम' : 'Worker Name'}:</strong> <span id="slipWorkerNameDisplay">मजदूर भाई (Migrant Worker)</span></div>
-          <div><strong>${isHi ? 'तारीख' : 'Date'}:</strong> ${formatDisplayDate(rec.date)}</div>
-          <div><strong>${isHi ? 'ठेकेदार' : 'Contractor'}:</strong> ${escapeHTML(rec.contractor)}</div>
-          <div><strong>${isHi ? 'कार्यस्थल / साइट' : 'Worksite'}:</strong> ${escapeHTML(rec.site)}</div>
-          <div><strong>${isHi ? 'काम की श्रेणी' : 'Skill Role'}:</strong> ${escapeHTML(rec.role)}</div>
-          <div><strong>${isHi ? 'स्थिति' : 'Status'}:</strong> ${rec.status}</div>
+          <div><strong>Worker Name <span class="hi-bracket">(कामगार)</span>:</strong> <span>Migrant Worker (मजदूर)</span></div>
+          <div><strong>Date <span class="hi-bracket">(तारीख)</span>:</strong> ${formatDisplayDate(rec.date)}</div>
+          <div><strong>Contractor <span class="hi-bracket">(ठेकेदार)</span>:</strong> ${escapeHTML(rec.contractor)}</div>
+          <div><strong>Worksite <span class="hi-bracket">(साइट)</span>:</strong> ${escapeHTML(rec.site)}</div>
+          <div><strong>Skill Role <span class="hi-bracket">(श्रेणी)</span>:</strong> ${escapeHTML(rec.role)}</div>
+          <div><strong>Status <span class="hi-bracket">(स्थिति)</span>:</strong> ${rec.status}</div>
         </div>
 
         <div class="slip-math-box">
           <div class="slip-math-row">
-            <span>${isHi ? 'तय दैनिक मजदूरी (Agreed Daily Wage)' : 'Agreed Daily Wage'}:</span>
+            <span>Agreed Daily Wage <span class="hi-bracket">(तय दैनिक मजदूरी)</span>:</span>
             <span>₹${rec.wage}.00</span>
           </div>
           <div class="slip-math-row">
-            <span>${isHi ? 'दिया गया अग्रिम/एडवांस (Advance Paid)' : 'Advance Paid'}:</span>
+            <span>Advance Paid Today <span class="hi-bracket">(दिया गया एडवांस)</span>:</span>
             <span>- ₹${rec.advance}.00</span>
           </div>
           <div class="slip-math-row total-due">
-            <span>${isHi ? 'कुल बाकी बकाया राशि (Net Balance Due)' : 'Net Outstanding Balance'}:</span>
+            <span>Net Outstanding Balance Due <span class="hi-bracket">(कुल बाकी बकाया)</span>:</span>
             <span>₹${rec.balance}.00</span>
           </div>
         </div>
 
-        ${rec.notes ? `<p style="font-size: 0.8rem; margin-bottom: 0.5rem;"><strong>${isHi ? 'टिप्पणी / काम का विवरण' : 'Remarks'}:</strong> ${escapeHTML(rec.notes)}</p>` : ''}
+        ${rec.notes ? `<p style="font-size: 0.8rem; margin-bottom: 0.5rem;"><strong>Work Details & Remarks <span class="hi-bracket">(विवरण)</span>:</strong> ${escapeHTML(rec.notes)}</p>` : ''}
 
         <div class="slip-signatures">
           <div>
-            ${isHi ? 'कामगार के हस्ताक्षर / अंगूठा' : 'Worker Signature / Thumb'}<br>
-            <small style="color: #666;">(Signature of Worker)</small>
+            Worker Signature / Thumb<br>
+            <span class="hi-bracket">(कामगार के हस्ताक्षर / अंगूठा)</span>
           </div>
           <div>
-            ${isHi ? 'ठेकेदार / मुंशी के हस्ताक्षर' : 'Contractor / Munshi Signature'}<br>
-            <small style="color: #666;">(Authorized Signatory)</small>
+            Contractor / Munshi Signature<br>
+            <span class="hi-bracket">(ठेकेदार के हस्ताक्षर)</span>
           </div>
         </div>
 
@@ -402,22 +404,13 @@ const WageTracker = (function () {
             <rect x="42" y="70" width="12" height="18" fill="#000000"/>
             <rect x="65" y="70" width="22" height="18" fill="#000000"/>
           </svg>
-          <div>सत्यापन कोड: ${slipHash} · श्रम कानूनों के तहत मान्य डिजिटल प्रति</div>
+          <div>Verification Token: #${slipHash} · Admissible Evidence under Labour Laws</div>
           <div style="font-size: 0.65rem; color: #888; margin-top: 2px;">Generated via Shram Stambh Client Architecture · Local Storage Verified</div>
         </div>
       </div>
     `;
 
     if (modal) modal.classList.add('open');
-  }
-
-  // =========================================================================
-  // Statutory Wage Auditor Methods
-  // =========================================================================
-  function getStatutoryRate(state, skillTier) {
-    const stateData = STATUTORY_RATES[state];
-    if (!stateData) return null;
-    return stateData[skillTier] || null;
   }
 
   function auditOfferedWage(state, skillTier, offeredWage) {
@@ -431,14 +424,15 @@ const WageTracker = (function () {
 
     return {
       state,
-      stateName: stateData.name_hi,
+      stateName: stateData.name,
+      stateNameHi: stateData.name_hi,
       skillTier,
       legalRate,
       offeredRate: offered,
       difference: difference,
       isViolation: isViolation,
-      monthlyTheft: difference * 26, // 26 working days in a month
-      annualTheft: difference * 312,  // 312 working days in a year
+      monthlyTheft: difference * 26,
+      annualTheft: difference * 312,
       act: stateData.act,
       helpline: stateData.helpline
     };
@@ -449,44 +443,42 @@ const WageTracker = (function () {
     const tableContainer = document.getElementById('statutoryMatrixContainer');
     if (!tableContainer || !stateData) return;
 
-    const isHi = window.currentLocale !== 'en';
-
     tableContainer.innerHTML = `
       <div class="statutory-table-wrap">
         <table class="statutory-table">
           <thead>
             <tr>
-              <th>${isHi ? 'काम की श्रेणी (Skill Category)' : 'Skill Category'}</th>
-              <th>${isHi ? 'दैनिक न्यूनतम दर (Daily Floor)' : 'Daily Rate'}</th>
-              <th>${isHi ? 'मासिक दर (26 दिन)' : 'Monthly (26 Days)'}</th>
+              <th>Skill Category <span class="hi-bracket">(काम की श्रेणी)</span></th>
+              <th>Daily Minimum Floor <span class="hi-bracket">(दैनिक दर)</span></th>
+              <th>Monthly Floor (26 Days) <span class="hi-bracket">(मासिक दर)</span></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>👷 ${isHi ? 'अकुशल मजदूर (Unskilled - Helper / Beldar)' : 'Unskilled (Helper / Beldar)'}</td>
-              <td><strong>₹${stateData.unskilled} / दिन</strong></td>
+              <td>👷 Unskilled (Helper / Beldar) <span class="hi-bracket">(अकुशल मजदूर)</span></td>
+              <td><strong>₹${stateData.unskilled} / day</strong></td>
               <td>₹${stateData.unskilled * 26}</td>
             </tr>
             <tr>
-              <td>🔨 ${isHi ? 'अर्ध-कुशल (Semi-Skilled - Asst. Mason)' : 'Semi-Skilled (Asst. Mason)'}</td>
-              <td><strong>₹${stateData.semi_skilled} / दिन</strong></td>
+              <td>🔨 Semi-Skilled (Asst. Mason) <span class="hi-bracket">(अर्ध-कुशल)</span></td>
+              <td><strong>₹${stateData.semi_skilled} / day</strong></td>
               <td>₹${stateData.semi_skilled * 26}</td>
             </tr>
             <tr>
-              <td>🛠️ ${isHi ? 'कुशल कारीगर (Skilled - Mason / Carpenter / Electrician)' : 'Skilled (Mason / Electrician)'}</td>
-              <td><strong>₹${stateData.skilled} / दिन</strong></td>
+              <td>🛠️ Skilled (Mason / Electrician) <span class="hi-bracket">(कुशल कारीगर)</span></td>
+              <td><strong>₹${stateData.skilled} / day</strong></td>
               <td>₹${stateData.skilled * 26}</td>
             </tr>
             <tr>
-              <td>📐 ${isHi ? 'उच्च कुशल (Highly Skilled - Foreman / Supervisor)' : 'Highly Skilled (Supervisor)'}</td>
-              <td><strong>₹${stateData.highly_skilled} / दिन</strong></td>
+              <td>📐 Highly Skilled (Supervisor) <span class="hi-bracket">(उच्च कुशल)</span></td>
+              <td><strong>₹${stateData.highly_skilled} / day</strong></td>
               <td>₹${stateData.highly_skilled * 26}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.5rem;">
-        📜 <strong>${isHi ? 'अधिसूचना' : 'Notification'}:</strong> ${stateData.act} · ${isHi ? 'राष्ट्रीय श्रम हेल्पलाइन' : 'Labour Helpline'}: <strong>${stateData.helpline}</strong>
+        📜 <strong>Statutory Act <span class="hi-bracket">(अधिसूचना)</span>:</strong> ${stateData.act} · National Labour Helpline: <strong>${stateData.helpline}</strong>
       </div>
     `;
   }
@@ -497,7 +489,7 @@ const WageTracker = (function () {
       const parts = dateStr.split('-');
       if (parts.length === 3) {
         const d = new Date(parts[0], parts[1] - 1, parts[2]);
-        return d.toLocaleDateString(window.currentLocale === 'en' ? 'en-US' : 'hi-IN', {
+        return d.toLocaleDateString('en-US', {
           day: 'numeric',
           month: 'short',
           year: 'numeric'

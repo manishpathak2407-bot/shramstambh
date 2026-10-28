@@ -8,7 +8,7 @@
  * Switch Active View Tab
  */
 function switchTab(tabId) {
-  document.querySelectorAll('.nav-tab').forEach(tab => {
+  document.querySelectorAll('.nav-link-btn, .nav-tab').forEach(tab => {
     if (tab.getAttribute('data-tab') === tabId) {
       tab.classList.add('active');
     } else {
@@ -88,8 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Section Narrator Buttons
-  document.querySelectorAll('.btn-narrate').forEach(btn => {
+  // 4. Section & Hero Narrator Buttons
+  document.querySelectorAll('.btn-narrate, .btn-narrate-pill').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const key = e.currentTarget.getAttribute('data-narrate-key');
       if (SpeechNarrator.isSpeaking()) {
@@ -100,13 +100,90 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. Navigation Tabs
-  document.querySelectorAll('.nav-tab').forEach(tab => {
+  // 5. Navigation Links & Tabs
+  document.querySelectorAll('.nav-link-btn, .nav-tab').forEach(tab => {
     tab.addEventListener('click', (e) => {
       const target = e.currentTarget.getAttribute('data-tab');
-      switchTab(target);
+      if (target) {
+        switchTab(target);
+      }
     });
   });
+
+  // 5b. Gateway Cards Keyboard Accessibility
+  document.querySelectorAll('.gateway-card').forEach(card => {
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+
+  // 5c. Real-Time Interactive Notepad Widget (Quick Wage Calculator)
+  const quickWageInput = document.getElementById('quickWage');
+  const quickDaysInput = document.getElementById('quickDays');
+  const quickAdvanceInput = document.getElementById('quickAdvance');
+  const quickEarnedDisplay = document.getElementById('quickEarned');
+  const quickOwedDisplay = document.getElementById('quickOwed');
+  const btnQuickTransfer = document.getElementById('btnQuickTransferToKhata');
+
+  function calculateQuickWage() {
+    if (!quickWageInput || !quickDaysInput || !quickAdvanceInput) return;
+    const wage = Math.max(0, parseFloat(quickWageInput.value) || 0);
+    const days = Math.max(0, parseFloat(quickDaysInput.value) || 0);
+    const advance = Math.max(0, parseFloat(quickAdvanceInput.value) || 0);
+
+    const earned = wage * days;
+    const owed = Math.max(0, earned - advance);
+
+    if (quickEarnedDisplay) {
+      quickEarnedDisplay.textContent = '₹' + earned.toLocaleString('en-IN');
+    }
+    if (quickOwedDisplay) {
+      quickOwedDisplay.textContent = '₹' + owed.toLocaleString('en-IN');
+    }
+  }
+
+  if (quickWageInput && quickDaysInput && quickAdvanceInput) {
+    [quickWageInput, quickDaysInput, quickAdvanceInput].forEach(inp => {
+      inp.addEventListener('input', calculateQuickWage);
+    });
+    // Trigger initial computation
+    calculateQuickWage();
+  }
+
+  if (btnQuickTransfer) {
+    btnQuickTransfer.addEventListener('click', () => {
+      const wage = Math.max(0, parseFloat(quickWageInput ? quickWageInput.value : 0) || 0);
+      const days = Math.max(1, parseFloat(quickDaysInput ? quickDaysInput.value : 1) || 1);
+      const advance = Math.max(0, parseFloat(quickAdvanceInput ? quickAdvanceInput.value : 0) || 0);
+      const earned = wage * days;
+      const owed = Math.max(0, earned - advance);
+
+      // Pre-fill fields in Wage Khata form
+      const entryWage = document.getElementById('entryWage');
+      const entryAdvance = document.getElementById('entryAdvance');
+      const entryNotes = document.getElementById('entryNotes');
+      const entryThekedar = document.getElementById('entryThekedar');
+
+      if (entryWage) entryWage.value = wage;
+      if (entryAdvance) entryAdvance.value = advance;
+      if (entryNotes) {
+        entryNotes.value = `Quick Check prefill: ${days} days worked @ ₹${wage}/day. Net owed: ₹${owed.toLocaleString('en-IN')}`;
+      }
+
+      // Switch to Wage Khata tab
+      switchTab('khata');
+
+      // Focus on contractor input for convenience
+      if (entryThekedar) {
+        entryThekedar.focus();
+      }
+
+      showToast(`Transferred calculation to Wage Khata! Daily: ₹${wage}, Advance: ₹${advance}. Please enter contractor name. (खाते में विवरण दर्ज)`, 'success');
+    });
+  }
 
   // 6. Initialize Wage Tracker Data
   WageTracker.render();

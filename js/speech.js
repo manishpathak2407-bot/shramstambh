@@ -94,6 +94,7 @@ const SpeechNarrator = (function () {
   }
 
   const narratives = {
+    homeSection: "Welcome to Shram Stambh. Your hard work deserves fair pay. Check what you are owed right now on our quick check notebook, maintain an indisputable record of your daily wages, verify state legal minimum wage floors, and seek confidential help when needed. श्रम स्तंभ में आपका स्वागत है। आपकी मेहनत का पूरा और सही हक। तुरंत अपना बाकी हिसाब जांचें और अपने अधिकारों की रक्षा करें।",
     khataSection: "Welcome to Shram Stambh Digital Wage Ledger. Here you can record your daily agreed wage and advance payments. The system automatically computes your outstanding balance and generates official printable wage slips. श्रम स्तंभ डिजिटल खाता में आपका स्वागत है। यहाँ आप अपनी दैनिक मजदूरी और एडवांस का पक्का हिसाब रख सकते हैं।",
     verifySection: "Statutory Wage Auditor. Select your state and skill tier to verify contractor wages against official legal minimum wage floors. If underpaid, it triggers an instant Wage Theft Alert. कानूनी मजदूरी जांच केंद्र। अपने राज्य की सरकारी न्यूनतम दर से ठेकेदार की मजदूरी जांचें।",
     reviewsSection: "Contractor Directory & Community Ratings. Vet contractors before taking a job. Check wage timeliness, safety score, and community feedback. ठेकेदार डायरेक्टरी। काम स्वीकार करने से पहले ठेकेदार की साख और समय पर भुगतान का रिकॉर्ड देखें।",

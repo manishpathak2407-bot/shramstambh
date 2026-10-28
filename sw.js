@@ -4,15 +4,16 @@
  * Always serves fresh online assets immediately while guaranteeing offline access.
  */
 
-const CACHE_NAME = 'shramstambh-v3.0';
+const CACHE_NAME = 'shramstambh-v4.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './css/style.css?v=3.0',
-  './js/speech.js?v=3.0',
-  './js/wageTracker.js?v=3.0',
-  './js/complaints.js?v=3.0',
-  './js/app.js?v=3.0',
+  './css/style.css?v=4.0',
+  './js/speech.js?v=4.0',
+  './js/i18n.js?v=4.0',
+  './js/wageTracker.js?v=4.0',
+  './js/complaints.js?v=4.0',
+  './js/app.js?v=4.0',
   './manifest.json'
 ];
 

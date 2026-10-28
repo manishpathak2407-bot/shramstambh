@@ -1,6 +1,6 @@
 # Shram Stambh (श्रम स्तंभ)
 ### Client-Side Welfare & Legal Infrastructure for Migrant Labor
-**Academic Assessment:** Lovely Professional University — CA1 Project-Based Assessment (Total: 30 Marks)  
+**Academic Assessment:** Lovely Professional University — CA2 Project-Based Assessment (Total: 30 Marks)  
 **Technology Stack:** Pure Vanilla Web Stack (Semantic HTML5 · CSS3 Grid/Flexbox · Modular ES6+ JavaScript)  
 **Language Presentation:** English-First Layout with Bracketed Hindi Translations (कम साक्षरता सहायता)  
 **Hosting & Deployment:** 100% Free Tier Native · Permanent Free GitHub Pages / Vercel CDN

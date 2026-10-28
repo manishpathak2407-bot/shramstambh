@@ -1860,3 +1860,42 @@ a:hover {
   margin-top: 0.75rem;
   text-align: left;
 }
+
+
+/* Language Selector Dropdown & Voice Toggle Styles */
+.lang-selector-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.lang-select-dropdown {
+  background: var(--color-bg-surface);
+  border: 1.5px solid #d6cfc5;
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.65rem;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.lang-select-dropdown:hover,
+.lang-select-dropdown:focus {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.voice-ctrl-btn {
+  background: var(--color-primary-light) !important;
+  border: 1.5px solid var(--color-primary-border) !important;
+  color: var(--color-primary) !important;
+  font-weight: 700 !important;
+}
+
+.voice-ctrl-btn:hover {
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+}

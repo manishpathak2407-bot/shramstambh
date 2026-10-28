@@ -88,6 +88,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 3b. Bilingual Translation Selector (English / Pure Hindi)
+  const langSelect = document.getElementById('langSelect');
+  if (langSelect) {
+    langSelect.addEventListener('change', (e) => {
+      if (window.I18n) {
+        I18n.setLanguage(e.target.value);
+      }
+    });
+  }
+
+  // 3c. Voice Language Toggle (English / Pure Hindi Voice)
+  const btnVoiceToggle = document.getElementById('btnVoiceToggle');
+  if (btnVoiceToggle) {
+    btnVoiceToggle.addEventListener('click', () => {
+      if (window.SpeechNarrator) {
+        SpeechNarrator.toggleVoiceLanguage();
+      }
+    });
+  }
+
+  // 3d. Initialize Dual-Language Engine
+  if (window.I18n) {
+    I18n.init();
+  }
+
   // 4. Section & Hero Narrator Buttons
   document.querySelectorAll('.btn-narrate, .btn-narrate-pill').forEach(btn => {
     btn.addEventListener('click', (e) => {

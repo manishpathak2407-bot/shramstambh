@@ -1,5 +1,5 @@
 # SHRAM STAMBH (श्रम स्तंभ) — 3-Minute Video Presentation Script
-### Maximum Marks: 5 Marks | CA1 Project Assessment
+### Maximum Marks: 5 Marks | CA2 Project Assessment
 
 > **Instructions for the Team:**
 > - Length: Exactly 3 to 4 minutes.
@@ -22,7 +22,7 @@
 ## 📜 Full Word-for-Word Script
 
 ### [0:00 - 0:45] Problem Identification & Motivation (Speaker 1)
-> *"Respected Evaluators and Faculty Members, Good morning/afternoon. My name is [Name], Registration Number [Reg No], and along with my team members [Member 2] and [Member 3], we present our CA1 Project: **Shram Stambh (श्रम स्तंभ)**.*
+> *"Respected Evaluators and Faculty Members, Good morning/afternoon. My name is [Name], Registration Number [Reg No], and along with my team members [Member 2] and [Member 3], we present our CA2 Project: **Shram Stambh (श्रम स्तंभ)**.*
 >
 > *Over 450 million informal migrant laborers across India work under labor contractors without formal contracts or pay slips. They suffer from rampant wage theft, language barriers, zero contractor vetting mechanisms, and fear of retaliation when reporting abuse.*
 >

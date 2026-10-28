@@ -1,6 +1,6 @@
 # 🔗 Shram Stambh (श्रम स्तंभ) — Project Links & Submission Directory
 
-Academic Task 26271 · Lovely Professional University (CA1 Project-Based Assessment)
+Academic Task 26271 · Lovely Professional University (CA2 Project-Based Assessment)
 
 ---
 
@@ -14,7 +14,7 @@ Academic Task 26271 · Lovely Professional University (CA1 Project-Based Assessm
 
 ---
 
-## 📋 Mandatory UMS CA1 Project Submission Format (.xlsx / .doc)
+## 📋 Mandatory UMS CA2 Project Submission Format (.xlsx / .doc)
 
 Use this exact table when filling out your university submission file for UMS:
 

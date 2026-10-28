@@ -40,7 +40,7 @@ class NumberedCanvas(canvas.Canvas):
         # Footer
         page_str = f"Page {self._pageNumber} of {page_count}"
         self.drawRightString(566, 28, page_str)
-        self.drawString(46, 28, "Lovely Professional University · Academic Task 26271 (CA1 30/30 Marks)")
+        self.drawString(46, 28, "Lovely Professional University · Academic Task 26271 (CA2 30/30 Marks)")
         self.setStrokeColor(colors.HexColor("#cbd5e1"))
         self.setLineWidth(0.5)
         self.line(46, 38, 566, 38)
@@ -156,7 +156,7 @@ def build_pdf(filename):
 
     # Meta Table
     meta_data = [
-        [Paragraph("<b>Course:</b> Academic Tasks 26271 (CA1)", body_style),
+        [Paragraph("<b>Course:</b> Academic Tasks 26271 (CA2)", body_style),
          Paragraph("<b>Tech Stack:</b> HTML5, CSS3 Grid/Flex, ES6+ JS", body_style)],
         [Paragraph("<b>Evaluation Weight:</b> 30 / 30 Marks", body_style),
          Paragraph("<b>Architecture:</b> 100% Client-Side PWA (Rs. 0 Cost)", body_style)],

@@ -12,7 +12,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="css/style.css?v=3.5">
+  <link rel="stylesheet" href="css/style.css?v=4.0">
 </head>
 <body>
 
@@ -40,21 +40,29 @@
 
       <!-- Navigation Links -->
       <nav class="nav-links-wrap" role="navigation" aria-label="Main Navigation">
-        <button class="nav-link-btn active" data-tab="home">Home <span class="hi-bracket">(होम)</span></button>
-        <button class="nav-link-btn" data-tab="khata">Find work <span class="hi-bracket">(काम/खाता)</span></button>
-        <button class="nav-link-btn" data-tab="rights">Know your rights <span class="hi-bracket">(अधिकार)</span></button>
-        <button class="nav-link-btn" data-tab="contractors">Check a contractor <span class="hi-bracket">(ठेकेदार)</span></button>
-        <button class="nav-link-btn" data-tab="verify">Wage calculator <span class="hi-bracket">(कैलकुलेटर)</span></button>
-        <button class="nav-link-btn" data-tab="grievance">Get help <span class="hi-bracket">(मदद)</span></button>
+        <button class="nav-link-btn active" data-tab="home" data-i18n="navHome">Home <span class="hi-bracket">(होम)</span></button>
+        <button class="nav-link-btn" data-tab="khata" data-i18n="navKhata">Find work <span class="hi-bracket">(काम/खाता)</span></button>
+        <button class="nav-link-btn" data-tab="rights" data-i18n="navRights">Know your rights <span class="hi-bracket">(अधिकार)</span></button>
+        <button class="nav-link-btn" data-tab="contractors" data-i18n="navContractors">Check a contractor <span class="hi-bracket">(ठेकेदार)</span></button>
+        <button class="nav-link-btn" data-tab="verify" data-i18n="navVerify">Wage calculator <span class="hi-bracket">(कैलकुलेटर)</span></button>
+        <button class="nav-link-btn" data-tab="grievance" data-i18n="navGrievance">Get help <span class="hi-bracket">(मदद)</span></button>
       </nav>
 
       <!-- Accessibility & Helpline Controls -->
       <div class="header-controls">
-        <div class="lang-selector-pill" title="Language Selector">
-          <span>🌐</span>
-          <span>English</span>
-          <span style="font-size: 0.7rem;">▾</span>
+        <!-- Dual-Language Translator Dropdown -->
+        <div class="lang-selector-wrap" title="Website Language / वेबसाइट की भाषा">
+          <select id="langSelect" class="lang-select-dropdown" aria-label="Translate Website Language">
+            <option value="en">🌐 English (हिन्दी)</option>
+            <option value="hi">🌐 हिन्दी (Pure Hindi)</option>
+          </select>
         </div>
+
+        <!-- Acoustic Voice Language Selector -->
+        <button id="btnVoiceToggle" class="ctrl-btn voice-ctrl-btn" title="Toggle Voice (English / हिन्दी आवाज)" aria-label="Audio Voice Language">
+          🗣️ <span id="voiceBtnLabel">Voice: En</span>
+        </button>
+
         <button class="profile-btn" onclick="switchTab('khata')" title="Worker Profile & ID">
           <span>👤</span>
           <span>Profile</span>
@@ -87,27 +95,25 @@
           
           <!-- Left Column: Emotional, Dignified Civic Message -->
           <div class="hero-text-col">
-            <h1 id="homeHeading" class="hero-title">
+            <h1 id="homeHeading" class="hero-title" data-i18n="heroTitle">
               Your hard work<br>deserves fair pay.
             </h1>
-            <div style="font-size: 1.15rem; font-weight: 600; color: var(--color-primary); margin-top: -0.6rem; margin-bottom: 1rem;">
-              (आपकी मेहनत का पूरा और सही हक।)
-            </div>
+            <div class="hero-hindi-sub" data-i18n="heroSubHindi">(आपकी मेहनत का पूरा और सही हक।)</div>
 
-            <p class="hero-subtitle">
+            <p class="hero-subtitle" data-i18n="heroSubtitle">
               Find work with greater confidence, maintain an indisputable record of your daily wages, verify state legal minimum floors, and discover where to seek confidential help when something goes wrong.
             </p>
 
             <div class="hero-actions">
-              <button class="btn btn-hero-solid" onclick="switchTab('khata')">
+              <button class="btn btn-hero-solid" onclick="switchTab('khata')" data-i18n="btnFindWork">
                 Find work <span class="hi-bracket">(काम खोजें व हिसाब)</span>
               </button>
-              <button class="btn btn-hero-outline" onclick="switchTab('grievance')">
+              <button class="btn btn-hero-outline" onclick="switchTab('grievance')" data-i18n="btnReportIssue">
                 Report a wage issue <span class="hi-bracket">(मजदूरी चोरी की रिपोर्ट)</span>
               </button>
             </div>
             <div class="hero-listen-wrap">
-              <button class="btn-hero-listen btn-narrate-pill" data-narrate-key="homeSection" aria-label="Listen to homepage audio">
+              <button class="btn-hero-listen btn-narrate-pill" data-narrate-key="homeSection" data-i18n="btnListenPage" aria-label="Listen to homepage audio">
                 <span>🔊</span> <span>Listen to this page</span> <span class="hi-bracket">(सुनिए)</span>
               </button>
             </div>
@@ -118,13 +124,13 @@
           <div class="hero-widget-col">
             <div class="notepad-card" id="quickCheckNotepad">
               <div class="notepad-header">
-                <h3>Quick check: what are you owed?</h3>
-                <span style="font-size: 0.8rem; color: var(--color-text-muted);">(तुरंत अपना बाकी हिसाब जांचें)</span>
+                <h3><span data-i18n="quickCheckTitle">Quick check: what are you owed?</span></h3>
+                <span class="notepad-header-hi" data-i18n="quickCheckSub">(तुरंत अपना बाकी हिसाब जांचें)</span>
               </div>
 
               <!-- Line 1: Daily Wage Agreed -->
               <div class="notepad-row">
-                <span class="notepad-label">Daily wage agreed <span class="hi-bracket">(तय दैनिक मजदूरी)</span>:</span>
+                <span class="notepad-label" data-i18n="labelWageAgreed">Daily wage agreed <span class="hi-bracket">(तय दैनिक मजदूरी)</span>:</span>
                 <div class="notepad-input-wrap">
                   <span>₹</span>
                   <input type="number" id="quickWage" class="notepad-input" value="750" min="0" step="10">
@@ -133,7 +139,7 @@
 
               <!-- Line 2: Days Worked -->
               <div class="notepad-row">
-                <span class="notepad-label">Days worked <span class="hi-bracket">(काम के दिन)</span>:</span>
+                <span class="notepad-label" data-i18n="labelDaysWorked">Days worked <span class="hi-bracket">(काम के दिन)</span>:</span>
                 <div class="notepad-input-wrap">
                   <input type="number" id="quickDays" class="notepad-input" value="6" min="1" step="1">
                 </div>
@@ -141,7 +147,7 @@
 
               <!-- Line 3: Money Received So Far -->
               <div class="notepad-row">
-                <span class="notepad-label">Money received so far <span class="hi-bracket">(मिला हुआ एडवांस)</span>:</span>
+                <span class="notepad-label" data-i18n="labelAdvanceReceived">Money received so far <span class="hi-bracket">(मिला हुआ एडवांस)</span>:</span>
                 <div class="notepad-input-wrap">
                   <span>₹</span>
                   <input type="number" id="quickAdvance" class="notepad-input" value="1500" min="0" step="10">
@@ -150,28 +156,26 @@
 
               <!-- Summary Line 1: You Earned -->
               <div class="notepad-summary-row">
-                <span style="font-weight: 600;">You earned <span class="hi-bracket">(कुल कमाई)</span>:</span>
+                <span style="font-weight: 600;" data-i18n="labelEarned">You earned <span class="hi-bracket">(कुल कमाई)</span>:</span>
                 <strong id="quickEarned" style="font-family: var(--font-mono); font-size: 1.1rem;">₹4,500</strong>
               </div>
 
               <!-- Summary Line 2: Still Owed To You -->
               <div class="notepad-owed-row">
-                <span>Still owed to you <span class="hi-bracket">(बाकी बकाया)</span>:</span>
+                <span data-i18n="labelOwed">Still owed to you <span class="hi-bracket">(बाकी बकाया)</span>:</span>
                 <span id="quickOwed" class="owed-amount">₹3,000</span>
               </div>
 
-              <div class="notepad-footer-hint">
-                Fill in the three lines above to see the amount automatically.
-              </div>
+              <div class="notepad-footer-hint" data-i18n="notepadHint">Fill in the three lines above to see the amount automatically.</div>
 
               <!-- Bridge to Full Ledger -->
               <div style="margin-top: 0.85rem;">
-                <button id="btnQuickTransferToKhata" class="btn-notepad-action">
+                <button id="btnQuickTransferToKhata" class="btn-notepad-action" data-i18n="notepadAction">
                   <u>Add overtime and keep a record ➔</u>
                 </button>
               </div>
             </div>
-            <div class="notepad-under-note">Nothing you type here is saved. Runs 100% privately on your device.</div>
+            <div class="notepad-under-note" data-i18n="notepadPrivacy">Nothing you type here is saved. Runs 100% privately on your device.</div>
           </div>
 
         </div>
@@ -180,8 +184,8 @@
       <!-- Gateway Cards Section: Deeper Entry Points into Website -->
       <div class="gateway-section">
         <div class="gateway-section-title">
-          <h2>Everything you need to protect your labor and wages</h2>
-          <p>Explore Shram Stambh's four dedicated civic modules built for unorganized workers.</p>
+          <h2 data-i18n="gatewaySectionTitle">Everything you need to protect your labor and wages</h2>
+          <p data-i18n="gatewaySectionSubtitle">Explore Shram Stambh's four dedicated civic modules built for unorganized workers.</p>
         </div>
 
         <div class="gateway-grid">
@@ -190,40 +194,40 @@
           <div class="gateway-card" onclick="switchTab('khata')" role="button" tabindex="0">
             <div class="gateway-icon">📋</div>
             <div>
-              <h3>Wage Khata &amp; Slip Engine <span class="hi-bracket">(दैनिक हिसाब)</span></h3>
-              <p>Log daily agreed wages, partial advance payments, and calculate net dues with automated printable balance slips featuring QR verification.</p>
+              <h3 data-i18n="gw1Title">Wage Khata &amp; Slip Engine <span class="hi-bracket">(दैनिक हिसाब)</span></h3>
+              <p data-i18n="gw1Desc">Log daily agreed wages, partial advance payments, and calculate net dues with automated printable balance slips featuring QR verification.</p>
             </div>
-            <span class="gateway-cta-link">Open Wage Ledger ➔</span>
+            <span class="gateway-cta-link" data-i18n="gw1Link">Open Wage Ledger ➔</span>
           </div>
 
           <!-- Gateway Card 2: Legal Wage Auditor -->
           <div class="gateway-card" onclick="switchTab('verify')" role="button" tabindex="0">
             <div class="gateway-icon">⚖️</div>
             <div>
-              <h3>Statutory Wage Auditor <span class="hi-bracket">(कानूनी मजदूरी जांच)</span></h3>
-              <p>Cross-validate contractor wage offers against official state BOCW rate floors in Delhi, Maharashtra, UP, Bihar and 4 other states to detect wage theft.</p>
+              <h3 data-i18n="gw2Title">Statutory Wage Auditor <span class="hi-bracket">(कानूनी मजदूरी जांच)</span></h3>
+              <p data-i18n="gw2Desc">Cross-validate contractor wage offers against official state BOCW rate floors in Delhi, Maharashtra, UP, Bihar and 4 other states to detect wage theft.</p>
             </div>
-            <span class="gateway-cta-link">Audit Wage Offer ➔</span>
+            <span class="gateway-cta-link" data-i18n="gw2Link">Audit Wage Offer ➔</span>
           </div>
 
           <!-- Gateway Card 3: Contractor Vetting -->
           <div class="gateway-card" onclick="switchTab('contractors')" role="button" tabindex="0">
             <div class="gateway-icon">👷</div>
             <div>
-              <h3>Contractor Vetting Directory <span class="hi-bracket">(ठेकेदार साख)</span></h3>
-              <p>Inspect labor contractor track records, timely payment percentages, worksite safety grades, and community feedback before arriving at a site.</p>
+              <h3 data-i18n="gw3Title">Contractor Vetting Directory <span class="hi-bracket">(ठेकेदार साख)</span></h3>
+              <p data-i18n="gw3Desc">Inspect labor contractor track records, timely payment percentages, worksite safety grades, and community feedback before arriving at a site.</p>
             </div>
-            <span class="gateway-cta-link">Check a Contractor ➔</span>
+            <span class="gateway-cta-link" data-i18n="gw3Link">Check a Contractor ➔</span>
           </div>
 
           <!-- Gateway Card 4: Whistleblower Portal -->
           <div class="gateway-card" onclick="switchTab('grievance')" role="button" tabindex="0">
             <div class="gateway-icon">🛡️</div>
             <div>
-              <h3>Gupt Whistleblower Portal <span class="hi-bracket">(गोपनीय शिकायत)</span></h3>
-              <p>Submit retaliation-proof reports of withheld wages or confiscated IDs with 100% identity sanitization and live tracking token (#SH-XXXX).</p>
+              <h3 data-i18n="gw4Title">Gupt Whistleblower Portal <span class="hi-bracket">(गोपनीय शिकायत)</span></h3>
+              <p data-i18n="gw4Desc">Submit retaliation-proof reports of withheld wages or confiscated IDs with 100% identity sanitization and live tracking token (#SH-XXXX).</p>
             </div>
-            <span class="gateway-cta-link">Report Anonymously ➔</span>
+            <span class="gateway-cta-link" data-i18n="gw4Link">Report Anonymously ➔</span>
           </div>
 
         </div>
@@ -749,7 +753,7 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <div>
-        <span class="academic-badge">Academic Project · Lovely Professional University (CA1 Assessment)</span>
+        <span class="academic-badge">Academic Project · Lovely Professional University (CA2 Assessment)</span>
       </div>
       <div>
         <strong>Shram Stambh <span class="hi-bracket">(श्रम स्तंभ)</span></strong> · Client-Side Welfare &amp; Legal Infrastructure for Migrant Labor
@@ -764,16 +768,17 @@
   </footer>
 
   <!-- Core Pure Vanilla Modular Scripts (ES6+) -->
-  <script src="js/speech.js?v=3.5"></script>
-  <script src="js/wageTracker.js?v=3.5"></script>
-  <script src="js/complaints.js?v=3.5"></script>
-  <script src="js/app.js?v=3.5"></script>
+  <script src="js/speech.js?v=4.0"></script>
+  <script src="js/i18n.js?v=4.0"></script>
+  <script src="js/wageTracker.js?v=4.0"></script>
+  <script src="js/complaints.js?v=4.0"></script>
+  <script src="js/app.js?v=4.0"></script>
 
   <!-- Service Worker Registration for PWA Offline Resilience -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=3.5').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=4.0').then(reg => {
           reg.update();
         }).catch(err => console.warn('SW error:', err));
 

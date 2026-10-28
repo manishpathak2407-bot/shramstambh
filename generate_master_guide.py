@@ -40,7 +40,7 @@ class MasterNumberedCanvas(canvas.Canvas):
         # Footer (All pages)
         page_str = f"Page {self._pageNumber} of {page_count}"
         self.drawRightString(566, 26, page_str)
-        self.drawString(46, 26, "Lovely Professional University · Academic Task 26271 (CA1 30/30 Marks) · Confidential")
+        self.drawString(46, 26, "Lovely Professional University · Academic Task 26271 (CA2 30/30 Marks) · Confidential")
         self.setStrokeColor(colors.HexColor("#cbd5e1"))
         self.setLineWidth(0.5)
         self.line(46, 36, 566, 36)
@@ -161,11 +161,11 @@ def build_pdf(filename):
     # =========================================================================
     elements.append(Paragraph("SHRAM STAMBH (CIVIC WELFARE PLATFORM)", title_style))
     elements.append(Paragraph("<b>Comprehensive Technical Architecture, Code Working, File Interconnection & Viva Voce Compendium</b><br/>"
-                              "Official Academic Assessment Manual · Lovely Professional University (CA1 Assessment 30/30 Marks)", subtitle_style))
+                              "Official Academic Assessment Manual · Lovely Professional University (CA2 Assessment 30/30 Marks)", subtitle_style))
     elements.append(HRFlowable(width="100%", thickness=1.5, color=primary_color, spaceAfter=8))
 
     meta_data = [
-        [Paragraph("<b>Course Code:</b> Academic Task 26271 (CA1)", body_style),
+        [Paragraph("<b>Course Code:</b> Academic Task 26271 (CA2)", body_style),
          Paragraph("<b>Tech Stack:</b> HTML5, CSS3 Grid/Flex, Modular ES6+ JS", body_style)],
         [Paragraph("<b>Evaluation Weight:</b> 30 / 30 Marks (Full Score Target)", body_style),
          Paragraph("<b>Operating Cost:</b> Rs. 0 Native (Zero Cloud Server Overhead)", body_style)],
@@ -267,13 +267,16 @@ def build_pdf(filename):
         [Paragraph("File Name", header_cell_style), Paragraph("Architectural Tier", header_cell_style), Paragraph("Exact Role & Functional Responsibility", header_cell_style)],
         
         [Paragraph("<b>index.html</b>", code_style), Paragraph("Presentation DOM", body_style),
-         Paragraph("Single-page semantic container; hosts header, bottom thumb-dock navigation tabs, form modals, and high-contrast toggle. Uses English-first copy with bracketed Hindi translations on every element.", body_style)],
+         Paragraph("Single-page semantic container; features View 0 Editorial Homepage with Lined Paper Notepad Widget, Gateway Navigation, Top-Right Dual-Language Translator dropdown (en/hi), Voice Selector, and CA2 Academic Assessment details.", body_style)],
         
         [Paragraph("<b>css/style.css</b>", code_style), Paragraph("Design System", body_style),
          Paragraph("Centralized CSS variables (<code>:root</code>), WCAG AA touch targets (>=48px), responsive grid/flexbox, shake animations for alerts, high-contrast sunlight mode, and <code>@media print</code> physical paper slip engine.", body_style)],
 
+        [Paragraph("<b>js/i18n.js</b>", code_style), Paragraph("Bilingual Engine", body_style),
+         Paragraph("Internationalization engine enabling instantaneous, client-side translation between English-first with bracketed Hindi and 100% Pure Hindi (शुद्ध हिन्दी) with localStorage persistence.", body_style)],
+
         [Paragraph("<b>js/speech.js</b>", code_style), Paragraph("Acoustic Layer", body_style),
-         Paragraph("W3C <code>SpeechSynthesis</code> engine wrapper. Filters Indian locales (<code>en-IN</code>/<code>hi-IN</code>), manages speech queue, handles stop/start states, and animates speaker waves for illiterate laborers.", body_style)],
+         Paragraph("W3C <code>SpeechSynthesis</code> engine wrapper supporting on-demand acoustic voice language switching between Indian English (<code>en-IN</code>) and native Devanagari Hindi (<code>hi-IN</code>).", body_style)],
 
         [Paragraph("<b>js/wageTracker.js</b>", code_style), Paragraph("Business Logic", body_style),
          Paragraph("Manages daily Wage Khata ledger CRUD operations, calculates balances (<code>Balance = Wage - Advance</code>), triggers printable receipts with QR verification codes, and holds the 8-state statutory wage matrix.", body_style)],
@@ -285,7 +288,7 @@ def build_pdf(filename):
          Paragraph("Central application controller. Bootstraps DOM listeners, coordinates tab routing, handles modal lifecycles, validates form inputs, triggers toast notifications, and renders the inspector demonstration view.", body_style)],
 
         [Paragraph("<b>sw.js</b>", code_style), Paragraph("PWA Offline Cache", body_style),
-         Paragraph("Service worker implementing a Cache-First runtime strategy. Intercepts fetch requests and serves cached core assets so the application functions 100% offline at remote construction sites.", body_style)],
+         Paragraph("Service worker implementing a Network-First runtime strategy with automated cache purging (v4.0). Intercepts fetch requests and serves cached core assets so the application functions 100% offline at remote construction sites.", body_style)],
 
         [Paragraph("<b>manifest.json</b>", code_style), Paragraph("PWA Manifest", body_style),
          Paragraph("Defines standalone mobile display, app icons, theme color (<code>#d95a00</code>), and enables Add to Home Screen on Android smartphones.", body_style)]
@@ -401,14 +404,17 @@ def build_pdf(filename):
     ))
     elements.append(Spacer(1, 4))
 
-    # MODULE 5
-    elements.append(Paragraph("Module 5: Acoustic Narrator Engine (js/speech.js)", h2_style))
+    # MODULE 5 & 5B
+    elements.append(Paragraph("Module 5: Acoustic Voice Switching & Dual-Language i18n Engine (js/speech.js, js/i18n.js)", h2_style))
     elements.append(Paragraph(
-        "<b>HOW It Works:</b> Wraps <code>window.speechSynthesis</code>. In <code>initVoices()</code>, it queries system speech engines for Indian locales (<code>en-IN</code>, <code>hi-IN</code>). Tapping 'Listen' triggers <code>SpeechSynthesisUtterance</code> at <code>rate = 0.95</code> for clear rural comprehension, and cancels prior audio buffers to avoid overlap.",
+        "<b>HOW It Works:</b><br/>"
+        "• <code>I18n.setLanguage(lang)</code>: Toggles between English-first (with bracketed Hindi) and 100% Pure Hindi (शुद्ध हिन्दी). Dynamically injects translated strings across all <code>[data-i18n]</code> DOM elements and persists choice in <code>localStorage</code>.<br/>"
+        "• <code>SpeechNarrator.setVoiceLanguage(lang)</code>: Selects native Devanagari Hindi voice engines (<code>hi-IN</code>) or Indian English (<code>en-IN</code>), pulling from separate localized speech corpora (<code>narrativesHindi</code> vs <code>narratives</code>).<br/>"
+        "• Homepage Lined Paper Notepad: Authentically mimics physical contractor workbooks with double red margin rules, blue horizontal guidelines, real-time balance calculations, and 1-tap transfer to the Wage Khata ledger.",
         body_style
     ))
     elements.append(Paragraph(
-        "<b>WHY It Was Implemented This Way:</b> Third-party voice APIs (e.g. Google Cloud TTS, Amazon Polly) require API keys, backend servers, and paid monthly bills. The W3C SpeechSynthesis API is built directly into Android Chrome and Windows Edge for <b>Rs. 0 cost</b> and zero network latency.",
+        "<b>WHY It Was Implemented This Way:</b> Zero external translation libraries or cloud APIs. Zero API cost, sub-10ms UI translation response, and immediate accessibility for illiterate rural workers who require spoken Hindi voice.",
         body_style
     ))
     elements.append(Spacer(1, 4))
@@ -468,7 +474,7 @@ def build_pdf(filename):
          "local web storage, and hosted permanently on GitHub Pages static CDN for Rs. 0."),
 
         ("Q8: How does the app work offline when there is no internet on a construction site?",
-         "We implemented a Progressive Web App Service Worker (sw.js) using a Cache-First strategy. Core assets (HTML, CSS, JS, manifest) are cached "
+         "We implemented a Progressive Web App Service Worker (sw.js) using a Network-First strategy with automated cache purging (v4.0). Core assets (HTML, CSS, JS, manifest) are cached "
          "locally during install. Fetch events are intercepted and served from cache when no internet connection is detected."),
 
         ("Q9: What happens if a contractor disputes the hours or wages recorded on the slip?",

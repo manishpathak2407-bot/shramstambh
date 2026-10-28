@@ -16,7 +16,8 @@ shramstambh/
 │
 ├── js/wageTracker.js        # Business Logic: Wage Khata CRUD, balance formulas, statutory auditor matrix
 ├── js/complaints.js         # Business Logic: Identity sanitization, ticket hashing, contractor vetting
-├── js/speech.js             # Accessibility Layer: W3C SpeechSynthesis acoustic narration engine
+├── js/speech.js             # Accessibility Layer: W3C SpeechSynthesis acoustic narration engine (En/Hi)
+├── js/i18n.js               # Localization Layer: Client-side dynamic dual-language translation engine
 ├── js/app.js                # Controller Layer: Tab routing, modal lifecycles, and toast notifications
 │
 ├── manifest.json            # Deployment: PWA manifest for mobile installation

@@ -6,10 +6,10 @@
 
 :root {
   /* Warm Minimalistic Orange & Stone Palette */
-  --color-primary: #c25424;           /* Warm Terracotta / Burnt Sienna */
-  --color-primary-hover: #a33f16;
-  --color-primary-light: #fef5ee;     /* Warm linen peach */
-  --color-primary-border: #f6c8af;
+  --color-primary: #9c411e;           /* Warm Terracotta / Burnt Sienna */
+  --color-primary-hover: #7f3214;
+  --color-primary-light: #fbeee9;     /* Warm linen peach */
+  --color-primary-border: #f0cbbd;
   --color-primary-dark: #6e2509;
 
   --color-accent-amber: #b45309;
@@ -24,9 +24,9 @@
   --color-danger-border: #fecaca;
 
   /* Surfaces & Backgrounds */
-  --color-bg-page: #fbf9f5;          /* Warm organic linen / cream */
+  --color-bg-page: #faf7f2;          /* Warm organic linen / cream */
   --color-bg-surface: #ffffff;
-  --color-bg-subtle: #f5f2eb;        /* Soft sand */
+  --color-bg-subtle: #f3ede2;        /* Soft sand */
   --color-bg-card: #ffffff;
 
   /* Typography Colors */
@@ -34,7 +34,7 @@
   --color-text-muted: #57534e;       /* Medium warm stone */
   --color-text-light: #78716c;
   --color-text-inverse: #ffffff;
-  --color-border: #e7e5e4;           /* Soft organic divider */
+  --color-border: #e6dfd5;           /* Soft organic divider */
   --color-border-hover: #d6d3d1;
   --color-border-focus: #c25424;
 
@@ -81,19 +81,19 @@
 
 /* High Contrast Mode for Construction Sunlight */
 body.high-contrast {
-  --color-primary: #f97316;
-  --color-primary-hover: #ea580c;
-  --color-primary-light: #1c1917;
-  --color-primary-border: #f97316;
+  --color-primary: #9c411e;
+  --color-primary-hover: #7f3214;
+  --color-primary-light: #fbeee9;
+  --color-primary-border: #f0cbbd;
 
-  --color-bg-page: #000000;
+  --color-bg-page: #faf7f2;
   --color-bg-surface: #121212;
-  --color-bg-subtle: #1c1917;
+  --color-bg-subtle: #f3ede2;
   --color-bg-card: #18181b;
 
   --color-text-main: #ffffff;
   --color-text-muted: #d4d4d8;
-  --color-border: #3f3f46;
+  --color-border: #e6dfd5;
 
   --color-success: #4ade80;
   --color-success-bg: #052e16;
@@ -175,12 +175,12 @@ a:hover {
    Header & Navigation
    ========================================================================== */
 .site-header {
-  background: var(--color-bg-surface);
-  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  background: #faf7f2;
+  border-bottom: 1px solid #ece6dc;
+  padding: 0.65rem 0;
 }
 
 .header-inner {
@@ -519,53 +519,56 @@ a:hover {
 }
 
 /* ==========================================================================
-   Notepad / Lined Paper Quick Check Widget
+   Notepad / Lined Paper Quick Check Widget (Faithful to Image Spec)
    ========================================================================== */
 .notepad-card {
-  background: #ffffff;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-notepad);
+  background: #fdfbf7;
+  border: 1px solid #e2dbcf;
+  border-radius: 6px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
   position: relative;
   overflow: hidden;
-  padding: 1.5rem 1.5rem 1.25rem 2.25rem;
+  padding: 1.6rem 1.6rem 1.4rem 2.8rem;
+  background-image: repeating-linear-gradient(to bottom, transparent, transparent 37px, #e7edf3 37px, #e7edf3 38px);
 }
 
-/* Red vertical ledger margin line */
+/* Authentic red double margin line */
 .notepad-card::before {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 26px;
-  width: 2px;
-  background: rgba(194, 84, 36, 0.25);
+  left: 32px;
+  width: 1px;
+  background: #d97757;
+  box-shadow: 3px 0 0 #d97757;
 }
 
 .notepad-header {
-  border-bottom: 2px solid var(--color-text-main);
-  padding-bottom: 0.65rem;
-  margin-bottom: 1rem;
+  border-bottom: 2px solid #1c1917;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.85rem;
 }
 
 .notepad-header h3 {
   font-family: var(--font-serif);
-  font-size: var(--fs-xl);
+  font-size: 1.35rem;
   font-weight: 700;
-  color: var(--color-text-main);
+  color: #1c1917;
+  letter-spacing: -0.01em;
 }
 
 .notepad-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid #f0ede6;
-  font-size: var(--fs-sm);
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #ebe5db;
+  font-size: 0.95rem;
 }
 
 .notepad-label {
-  color: var(--color-text-muted);
+  color: #44403c;
   font-weight: 500;
 }
 
@@ -577,22 +580,23 @@ a:hover {
 }
 
 .notepad-input {
-  width: 90px;
-  padding: 0.35rem 0.5rem;
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius-sm);
-  background: #faf8f5;
+  width: 95px;
+  padding: 0.3rem 0.55rem;
+  border: 1px dashed #d1c8bb;
+  border-radius: 4px;
+  background: #faf7f2;
   text-align: right;
   font-family: var(--font-mono);
-  font-size: var(--fs-base);
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--color-text-main);
+  color: #1c1917;
 }
 
 .notepad-input:focus {
   border-style: solid;
-  border-color: var(--color-primary);
+  border-color: #9c411e;
   background: #ffffff;
+  outline: none;
 }
 
 .notepad-summary-row {
@@ -600,51 +604,49 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   padding: 0.65rem 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: var(--fs-base);
+  border-bottom: 1px solid #1c1917;
+  font-size: 1.05rem;
 }
 
 .notepad-owed-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0.85rem 0;
-  border-bottom: 3px double var(--color-primary);
-  font-size: var(--fs-lg);
-  font-weight: 700;
+  align-items: baseline;
+  padding: 0.85rem 0 0.5rem 0;
+  border-bottom: 3px double #9c411e;
 }
 
 .owed-amount {
   font-family: var(--font-serif);
-  font-size: 1.85rem;
-  color: var(--color-primary);
+  font-size: 2.25rem;
+  color: #9c411e;
   font-weight: 800;
+  line-height: 1;
 }
 
 .notepad-footer-hint {
-  font-size: var(--fs-xs);
-  color: var(--color-text-light);
-  margin-top: 0.85rem;
-  text-align: center;
+  font-size: 0.82rem;
+  color: #78716c;
+  margin-top: 1rem;
+  font-style: italic;
+  text-align: left;
 }
 
 .btn-notepad-action {
-  width: 100%;
-  margin-top: 0.75rem;
-  padding: 0.55rem;
-  background: var(--color-bg-subtle);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  font-size: var(--fs-xs);
+  background: none;
+  border: none;
+  padding: 0.4rem 0;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: #1c1917;
+  text-decoration: underline;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  text-align: left;
+  display: inline-block;
 }
 
 .btn-notepad-action:hover {
-  background: var(--color-primary-light);
-  border-color: var(--color-primary);
+  color: #9c411e;
 }
 
 /* ==========================================================================
@@ -1753,4 +1755,108 @@ a:hover {
   .hero-subtitle {
     font-size: 1rem;
   }
+}
+
+
+/* Specific Hero & Notepad styling from Editorial Spec */
+.hero-hindi-sub {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #9c411e;
+  margin-top: -0.6rem;
+  margin-bottom: 1rem;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.btn-hero-solid {
+  background: #9c411e !important;
+  color: #ffffff !important;
+  padding: 0.75rem 1.6rem !important;
+  border-radius: 6px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border: none !important;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(156, 65, 30, 0.2) !important;
+  transition: background 0.15s ease-in-out;
+}
+.btn-hero-solid:hover {
+  background: #7f3214 !important;
+}
+
+.btn-hero-outline {
+  background: #faf7f2 !important;
+  color: #1c1917 !important;
+  padding: 0.75rem 1.4rem !important;
+  border-radius: 6px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border: 1.5px solid #292524 !important;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+.btn-hero-outline:hover {
+  background: #ece5d8 !important;
+}
+
+.hero-listen-wrap {
+  margin-top: 0.5rem;
+}
+
+.btn-hero-listen {
+  background: #faf7f2;
+  color: #1c1917;
+  padding: 0.45rem 0.95rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: 1px solid #d6cfc5;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.15s ease-in-out;
+}
+.btn-hero-listen:hover {
+  border-color: #9c411e;
+  color: #9c411e;
+  background: #fdfbf7;
+}
+
+.lang-selector-pill, .profile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid #d6cfc5;
+  background: #faf7f2;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1c1917;
+  cursor: pointer;
+}
+.lang-selector-pill:hover, .profile-btn:hover {
+  border-color: #9c411e;
+}
+
+.notepad-header-hi {
+  font-size: 0.8rem;
+  color: #78716c;
+  display: block;
+  margin-top: 2px;
+}
+
+.notepad-under-note {
+  font-size: 0.82rem;
+  color: #78716c;
+  margin-top: 0.75rem;
+  text-align: left;
 }

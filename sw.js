@@ -1,35 +1,39 @@
 /**
- * SHRAM STAMBH (श्रम स्तंभ) - Offline Service Worker
- * Guarantees zero-network resilience at remote construction sites.
- * Caches core semantic DOM, CSS design system, and ES6+ modules.
+ * SHRAM STAMBH (श्रम स्तंभ) - Offline Service Worker v3.0
+ * Network-First Strategy with Cache Fallback for offline resilience.
+ * Always serves fresh online assets immediately while guaranteeing offline access.
  */
 
-const CACHE_NAME = 'shramstambh-v1.0';
+const CACHE_NAME = 'shramstambh-v3.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './css/style.css',
-  './js/speech.js',
-  './js/wageTracker.js',
-  './js/complaints.js',
-  './js/app.js',
+  './css/style.css?v=3.0',
+  './js/speech.js?v=3.0',
+  './js/wageTracker.js?v=3.0',
+  './js/complaints.js?v=3.0',
+  './js/app.js?v=3.0',
   './manifest.json'
 ];
 
+// 1. Install Event: Cache critical shell and force immediate activation
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
+// 2. Activate Event: Aggressively purge all old versioned caches and claim open clients
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('[SW] Purging outdated cache:', key);
             return caches.delete(key);
           }
         })
@@ -38,18 +42,32 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// 3. Fetch Event: Network-First Strategy
+// Guarantees immediate real-time updates when online; falls back to cache when offline
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).catch(() => {
-        // Fallback for document navigation
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
         }
-      });
-    })
+        return networkResponse;
+      })
+      .catch(() => {
+        // Network unavailable (offline) - serve from cache
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          if (event.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
+        });
+      })
   );
 });

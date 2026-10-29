@@ -12,7 +12,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="css/style.css?v=4.0">
+  <link rel="stylesheet" href="css/style.css?v=4.2">
 </head>
 <body>
 
@@ -157,7 +157,7 @@
               <!-- Summary Line 1: You Earned -->
               <div class="notepad-summary-row">
                 <span style="font-weight: 600;" data-i18n="labelEarned">You earned <span class="hi-bracket">(कुल कमाई)</span>:</span>
-                <strong id="quickEarned" style="font-family: var(--font-mono); font-size: 1.1rem;">₹4,500</strong>
+                <strong id="quickEarned" style="font-size: 1.15rem;">₹4,500</strong>
               </div>
 
               <!-- Summary Line 2: Still Owed To You -->
@@ -759,7 +759,8 @@
         <strong>Shram Stambh <span class="hi-bracket">(श्रम स्तंभ)</span></strong> · Client-Side Welfare &amp; Legal Infrastructure for Migrant Labor
       </div>
       <div style="font-size: 0.75rem; color: var(--color-text-muted);">
-        100% Free Tier Native · 0 KB External Library Weight · Client Cold Boot &lt; 150ms · WCAG 2.1 AA Accessible
+        <div style="margin-bottom: 0.35rem;"><a href="guide.html" target="_blank" style="color: var(--color-primary); font-weight: bold; text-decoration: underline;">📖 Master Project Guide &amp; Viva Voce Compendium (HTML)</a></div>
+        100% Free Tier Native · Pure HTML5, CSS3 &amp; JavaScript · Client Cold Boot &lt; 150ms · WCAG 2.1 AA Accessible
       </div>
       <div style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 0.25rem;">
         National Labour Helpline <span class="hi-bracket">(श्रम हेल्पलाइन)</span>: <strong>14434</strong> · Emergency Police: <strong>112</strong>
@@ -778,7 +779,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=4.0').then(reg => {
+        navigator.serviceWorker.register('sw.js?v=4.2').then(reg => {
           reg.update();
         }).catch(err => console.warn('SW error:', err));
 

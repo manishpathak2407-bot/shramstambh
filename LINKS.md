@@ -43,6 +43,7 @@ Use this exact table when filling out your university submission file for UMS:
 
 ## 📑 Local Repository Document Links
 
+* [guide.html](guide.html) — Pure HTML5/CSS3 8-Page Master Project Guide & 27 Viva Voce Compendium (Print/Save to PDF via browser)
 * [README.md](README.md) — Comprehensive architectural blueprint, features overview, and system benchmarks
 * [CODE.md](CODE.md) — Full technical code documentation, data schemas, and mathematical algorithms
 * [VIVA_GUIDE.md](VIVA_GUIDE.md) — Word-for-word 10-Mark Viva Voce examiner Q&A preparation guide

@@ -72,6 +72,7 @@ This creates compounding vulnerabilities:
 ```
 shramstambh/
 ├── index.html                   # Single-page semantic English-first container & views (15 Marks)
+├── guide.html                   # Pure HTML5/CSS3 8-Page Master Project Guide & Viva Compendium
 ├── manifest.json                # PWA installation manifest for mobile home screen
 ├── sw.js                        # Service Worker for 100% offline cache at construction sites
 ├── push.bat                     # Convenient 1-click batch script to push commits to GitHub
@@ -79,6 +80,7 @@ shramstambh/
 │   └── style.css                # CSS3 variables, bracketed hindi styling, responsive layout, print styles
 ├── js/
 │   ├── speech.js                # W3C SpeechSynthesis acoustic narration engine for low-literacy
+│   ├── i18n.js                  # Client-side bilingual translation engine (EN / Pure Hindi)
 │   ├── wageTracker.js           # Daily ledger CRUD, balance calculations, statutory legal auditor
 │   ├── complaints.js            # Anonymity sanitizer, cryptographic ticket generator, contractor vetting
 │   └── app.js                   # Application coordinator, tab routing, notifications, modal managers

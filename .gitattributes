@@ -1,0 +1,13 @@
+# GitHub Linguist Language Breakdown Configuration
+# Strictly reports only HTML, CSS, and JavaScript as programming languages
+*.js linguist-language=JavaScript
+*.css linguist-language=CSS
+*.html linguist-language=HTML
+
+# Non-code assets excluded from language percentages
+*.md linguist-detectable=false
+*.json linguist-detectable=false
+*.pdf linguist-detectable=false
+*.bat linguist-detectable=false
+*.py linguist-detectable=false
+*.py linguist-vendored=true

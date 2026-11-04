@@ -792,7 +792,7 @@ const WageTracker = (function () {
             </div>
             <div class="math-item">
               <span class="math-item-label">Advance <span class="hi-bracket">(एडवांस)</span></span>
-              <span class="math-item-val" style="color: #0284c7;">- ₹${r.advance}</span>
+              <span class="math-item-val" style="color: var(--color-trust);">- ₹${r.advance}</span>
             </div>
             <div class="math-item">
               <span class="math-item-label">Net Due <span class="hi-bracket">(बकाया)</span></span>
@@ -1335,13 +1335,13 @@ function showTicketReceiptModal(ticket) {
   content.innerHTML = `
     <div style="text-align: center; padding: 1rem 0;">
       <div style="font-size: 3rem; margin-bottom: 0.5rem;">🛡️</div>
-      <h3 style="font-size: var(--fs-xl); color: #0284c7; margin-bottom: 0.25rem;">Whistleblower Report Submitted! <span class="hi-bracket">(गोपनीय शिकायत दर्ज)</span></h3>
+      <h3 style="font-size: var(--fs-xl); color: var(--color-trust); margin-bottom: 0.25rem;">Whistleblower Report Submitted! <span class="hi-bracket">(गोपनीय शिकायत दर्ज)</span></h3>
       <p style="font-size: 0.85rem; color: var(--color-text-muted);">
         Your identity is 100% cryptographically sanitized. <span class="hi-bracket">(आपकी पहचान पूरी तरह सुरक्षित है।)</span>
       </p>
 
       <div class="ticket-receipt-card" style="margin: 1.25rem auto; max-width: 380px;">
-        <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #0284c7;">
+        <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--color-trust);">
           Confidential Tracking Ticket <span class="hi-bracket">(ट्रैकिंग टिकट नंबर)</span>
         </span>
         <div class="ticket-id-display" style="justify-content: center; margin: 0.35rem 0;">
@@ -1386,7 +1386,7 @@ function renderAdminDashboard() {
           <div style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 0.85rem; background: var(--color-bg-surface);">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
               <div>
-                <strong style="font-family: var(--font-mono); color: #0284c7;">${escapeHTML(g.ticketId)}</strong> · 
+                <strong style="font-family: var(--font-mono); color: var(--color-trust);">${escapeHTML(g.ticketId)}</strong> · 
                 <span style="font-size: 0.8rem; color: var(--color-text-muted);">${formatDisplayDate(g.date)}</span>
               </div>
               <span class="badge ${g.status === 'notice_issued' ? 'badge-due' : 'badge-verified'}">${escapeHTML(g.statusText)}</span>
@@ -1395,9 +1395,9 @@ function renderAdminDashboard() {
               <strong>👷 Contractor / Site <span class="hi-bracket">(ठेकेदार)</span>:</strong> ${escapeHTML(g.contractor)} (📍 ${escapeHTML(g.location)})<br>
               <strong>⚠️ Allegation <span class="hi-bracket">(आरोप)</span>:</strong> ${escapeHTML(g.categoryText)}<br>
               <strong>📝 Details <span class="hi-bracket">(विवरण)</span>:</strong> ${escapeHTML(g.description)}<br>
-              <strong>🔒 Worker Identity <span class="hi-bracket">(पहचान)</span>:</strong> <code style="background: #f1f5f9; padding: 2px 4px; border-radius: 3px;">${escapeHTML(g.workerName)} (${escapeHTML(g.contact)})</code>
+              <strong>🔒 Worker Identity <span class="hi-bracket">(पहचान)</span>:</strong> <code style="background: var(--color-bg-subtle); padding: 2px 4px; border-radius: 3px;">${escapeHTML(g.workerName)} (${escapeHTML(g.contact)})</code>
             </div>
-            <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #1e293b; background: #f8fafc; padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); border-left: 3px solid #0284c7;">
+            <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-main); background: var(--color-bg-subtle); padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); border-left: 4px solid var(--color-trust);">
               <strong>⚖️ Enforcement Officer Note <span class="hi-bracket">(विधिक नोट)</span>:</strong> ${escapeHTML(g.officerNotes)}
             </div>
           </div>

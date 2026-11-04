@@ -91,6 +91,27 @@ shramstambh/
 
 ---
 
+
+---
+
+## 🎨 The "Shramik (Laborer) Ledger" Design System
+
+To stand out decisively from standard, cookie-cutter student project templates, **Shram Stambh** adopts an authentic, analog **Physical Ledger Aesthetic** inspired by physical wage registers (*खाता*), cured construction cement, and printed official forms:
+
+### Color Palette Architecture
+| Role | Color Name | Hex Code | Purpose & Accessibility Rationale |
+|---|---|---|---|
+| **Background (The Ledger Paper)** | Washed Bone / Off-White | `#F4F1EA` | Mimics recycled paper or an old physical wage register (*खाता*). Softer on the eyes than digital `#FFFFFF`, preventing eye fatigue outdoors in bright sunlight. |
+| **Surface & Cards (The Concrete)** | Cured Cement | `#E8E5DC` | Rigid substrate for UI cards (Wage Ledger, Statutory Wage Auditor boxes, Gateway cards). Produces depth naturally without blurry drop shadows. |
+| **Primary Text (The Ink)** | Faded Asphalt | `#2C2B29` | Soft, warm charcoal mimicking ink pressed onto physical paper. Eliminates digital harshness and improves long-form reading comfort. |
+| **Primary Action (The Brick / Safety)** | Terracotta Brick | `#C2593A` | Muted, earthy red-orange referencing construction bricks and safety gear. High-contrast anchor for primary actions (*"Audit Wage Offer ➔"*, *"Report Anonymously"*). |
+| **Trust & Success Accent (The Civic Blue)** | Faded Uniform Blue | `#3A5A6E` | Utilitarian official blue replacing corporate neon greens. Communicates statutory authority, compliance, and institutional trust. |
+
+### Tactile Brutalist Physical Form Factors
+- **Flat Physical Borders:** Eliminates standard blur shadows (`box-shadow: 0 4px 6px rgba(0,0,0,0.1);`). Uses harsh, physical `border: 2px solid #2C2B29; border-radius: 4px;` for a printed register look.
+- **Physical Button Press Physics:** Buttons have rigid `box-shadow: 3px 3px 0px #2C2B29;` that physically depresses (`transform: translate(3px, 3px); box-shadow: 0px 0px 0px #2C2B29;`) upon clicking or tapping.
+- **Lined Wage Register Notepad:** The homepage quick-audit widget replicates an authentic physical lined notebook with red double margin rules and tactile dashed inputs.
+
 ## ⚡ 4. Core Features Walkthrough
 
 ### 1. Digital Wage Khata & Admissible Paper Slip

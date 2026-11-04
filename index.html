@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="theme-color" content="#C2593A">
+  <meta name="theme-color" content="#c25424">
   <meta name="description" content="Shram Stambh (श्रम स्तंभ) - Client-side welfare and legal infrastructure for migrant laborers in India. Digital wage ledger, statutory wage auditor, contractor vetting, and anonymous whistleblower portal.">
   <title>Shram Stambh (श्रम स्तंभ) | Migrant Labor Welfare & Legal Infrastructure</title>
   
@@ -267,7 +267,7 @@
         </div>
         <div class="stat-card days">
           <span class="stat-label">Days Recorded <span class="hi-bracket">(कार्य दिवस)</span></span>
-          <span id="kpiTotalDays" class="stat-value" style="color: var(--color-trust);">0</span>
+          <span id="kpiTotalDays" class="stat-value" style="color: #0284c7;">0</span>
           <span class="stat-subtext">Attendance logs</span>
         </div>
       </div>
@@ -504,13 +504,13 @@
         <div class="shield-content">
           <div class="shield-icon" aria-hidden="true">🔒</div>
           <div>
-            <h3 style="font-size: 1.15rem; color: #F4F1EA;">Zero-Retaliation Guarantee <span class="hi-bracket">(पूर्ण पहचान सुरक्षा)</span></h3>
-            <p style="font-size: 0.85rem; color: #D8D4CA; margin-top: 0.2rem;">
+            <h3 style="font-size: 1.15rem; color: #ffffff;">Zero-Retaliation Guarantee <span class="hi-bracket">(पूर्ण पहचान सुरक्षा)</span></h3>
+            <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.2rem;">
               Worker identity keys are stripped before storage. Unique tracking tokens protect against blacklisting or employer harassment.
             </p>
           </div>
         </div>
-        <button id="btnToggleAdmin" class="btn btn-secondary btn-small" style="background: #E8E5DC; color: #2C2B29; border: 2px solid #F4F1EA; box-shadow: 2px 2px 0px #000;">
+        <button id="btnToggleAdmin" class="btn btn-secondary btn-small" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">
           👔 Labour Officer Dashboard <span class="hi-bracket">(श्रम अधिकारी दृश्य)</span>
         </button>
       </div>
@@ -769,12 +769,5 @@
 
   <!-- Unified Application Script -->
   <script src="script.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
-      });
-    }
-  </script>
 </body>
 </html>
